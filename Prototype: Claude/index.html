@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Istanbul — Turkish Excellence in Hair Restoration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #007BFF;
+    --cyan: #17A2B8;
+    --blue-dark: #0056B3;
+    --ink: #0E0C0A;
+    --cream: #F8F4EE;
+    --warm-white: #FDFBF8;
+    --gray: #6B6560;
+    --light-gray: #E8E4DF;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--warm-white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(253, 251, 248, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 123, 255, 0.2);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--blue); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--blue); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--gray);
+    cursor: pointer;
+    border: 1px solid var(--light-gray);
+    padding: 0.4rem 0.75rem;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+    background: transparent;
+    font-family: var(--sans);
+  }
+
+  .lang-selector:hover { border-color: var(--blue); color: var(--blue); }
+
+  .lang-flag { font-size: 0.9rem; }
+
+  .nav-cta {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--ink);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--sans);
+  }
+
+  .nav-cta:hover { background: var(--blue-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 6rem;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--blue);
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 5.5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--gray);
+    max-width: 26rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--ink);
+    border: none;
+    padding: 0.9rem 2.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--sans);
+  }
+
+  .btn-primary:hover { background: var(--blue-dark); }
+
+  .btn-ghost {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    background: transparent;
+    border: 1px solid var(--light-gray);
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--sans);
+  }
+
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-num span { color: var(--blue); font-size: 1.4rem; }
+
+  .stat-label {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: #E8E0D5;
+  }
+
+  .hero-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, #c8dcdd 0%, #a8c8c6 100%);
+  }
+
+  .placeholder-icon {
+    width: 80px;
+    height: 80px;
+    opacity: 0.3;
+  }
+
+  .placeholder-text {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    color: var(--ink);
+    opacity: 0.35;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2rem;
+    background: rgba(253, 251, 248, 0.95);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .badge-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .badge-text { font-size: 0.75rem; line-height: 1.4; }
+  .badge-text strong { display: block; font-weight: 500; font-size: 0.82rem; }
+  .badge-text small { color: var(--gray); font-size: 0.7rem; letter-spacing: 0.05em; }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--ink);
+    padding: 1.5rem 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    overflow: hidden;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .trust-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+  }
+
+  .trust-item span {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .trust-divider {
+    width: 1px;
+    height: 1.5rem;
+    background: rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 7rem 6rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--blue); }
+
+  .section-sub {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--gray);
+    max-width: 38rem;
+  }
+
+  /* ── WHY HAIR ISTANBUL ── */
+  .why-section {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .why-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .why-card {
+    background: var(--warm-white);
+    border: 1px solid var(--light-gray);
+    padding: 1.75rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .why-card:hover { border-color: var(--cyan); }
+
+  .why-card-num {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .why-card-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .why-card-text {
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--gray);
+  }
+
+  /* ── TEAM ── */
+  .team-section { background: var(--warm-white); }
+
+  .team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .doctor-card {
+    border: 1px solid var(--light-gray);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .doctor-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+
+  .doctor-photo {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #c8dcdd 0%, #a8c8c6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .doctor-info {
+    padding: 1.25rem;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .doctor-name {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .doctor-title {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .doctor-spec {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .doctor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(0, 123, 255, 0.12);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-dark);
+  }
+
+  /* ── BEFORE/AFTER ── */
+  .ba-section {
+    background: var(--ink);
+    color: var(--warm-white);
+  }
+
+  .ba-section .section-title { color: var(--warm-white); }
+  .ba-section .section-label { color: var(--blue); }
+  .ba-section .section-sub { color: rgba(255,255,255,0.55); }
+
+  .ba-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+
+  .ba-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .ba-card { position: relative; }
+
+  .ba-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+
+  .ba-img {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 0.6rem;
+    position: relative;
+  }
+
+  .ba-img-before { background: linear-gradient(160deg, #202a2a 0%, #161e1d 100%); }
+  .ba-img-after  { background: linear-gradient(160deg, #283a38 0%, #202e2e 100%); }
+
+  .ba-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.4);
+    padding: 0.2rem 0.4rem;
+  }
+
+  .ba-after-label { color: var(--cyan); }
+
+  .ba-meta {
+    padding: 0.9rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ba-months {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .ba-grafts {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--cyan);
+  }
+
+  /* ── BOOKING ── */
+  .booking-section {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+
+  .booking-left { padding-top: 0.5rem; }
+
+  .booking-promise {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .promise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .promise-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    margin-top: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  .promise-text {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--gray);
+  }
+
+  .promise-text strong {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 0.1rem;
+    font-size: 0.82rem;
+  }
+
+  .booking-form {
+    background: var(--warm-white);
+    border: 1px solid var(--light-gray);
+    padding: 2.5rem;
+  }
+
+  .form-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+
+  .form-sub {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+
+  .form-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--light-gray);
+    background: var(--cream);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-input:focus { border-color: var(--blue); }
+  .form-input::placeholder { color: rgba(107,101,96,0.5); }
+
+  select.form-input { cursor: pointer; }
+
+  .form-note {
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--gray);
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .date-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .date-slot {
+    text-align: center;
+    padding: 0.6rem 0.3rem;
+    border: 1px solid var(--light-gray);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--cream);
+  }
+
+  .date-slot:hover { border-color: var(--blue); }
+
+  .date-slot.active {
+    border-color: var(--ink);
+    background: var(--ink);
+  }
+
+  .date-slot.active .date-day,
+  .date-slot.active .date-num { color: var(--warm-white); }
+
+  .date-day { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
+  .date-num { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; color: var(--ink); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { background: var(--warm-white); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .testimonial-card {
+    border: 1px solid var(--light-gray);
+    padding: 2rem 1.75rem;
+    position: relative;
+  }
+
+  .testimonial-quote {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .testimonial-text {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .author-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    flex-shrink: 0;
+  }
+
+  .author-name { font-size: 0.82rem; font-weight: 500; color: var(--ink); }
+  .author-origin { font-size: 0.72rem; font-weight: 300; color: var(--gray); }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .star {
+    width: 10px;
+    height: 10px;
+    background: var(--blue);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+
+  /* ── PROCESS ── */
+  .process-section {
+    background: var(--cream);
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 3.5rem;
+    border: 1px solid var(--light-gray);
+  }
+
+  .process-step {
+    padding: 2.25rem 1.75rem;
+    border-right: 1px solid var(--light-gray);
+    position: relative;
+  }
+
+  .process-step:last-child { border-right: none; }
+
+  .step-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--light-gray);
+    line-height: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .step-title {
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .step-text {
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--gray);
+  }
+
+  .step-tag {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    padding: 0.2rem 0;
+    border-bottom: 1px solid var(--cyan);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
+    padding: 4rem 6rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--warm-white);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-logo span { color: var(--blue); }
+
+  .footer-tagline {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.45);
+    max-width: 18rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-col-title {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a { font-size: 0.82rem; font-weight: 300; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--blue); }
+
+  .footer-contact p { font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.6); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy { font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.3); }
+
+  .footer-langs {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-lang {
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+  }
+
+  .footer-lang:hover { color: var(--blue); }
+  .footer-lang.active { color: var(--blue); }
+
+  /* ── LANG MODAL ── */
+  .lang-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(14,12,10,0.6);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lang-modal-overlay.open { display: flex; }
+
+  .lang-modal {
+    background: var(--warm-white);
+    border: 1px solid var(--light-gray);
+    padding: 2.5rem;
+    width: 32rem;
+    max-width: 90vw;
+  }
+
+  .lang-modal-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+
+  .lang-modal-sub {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .lang-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--light-gray);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+    font-family: var(--sans);
+    text-align: left;
+  }
+
+  .lang-option:hover { border-color: var(--blue); }
+  .lang-option.selected { border-color: var(--ink); background: var(--ink); }
+  .lang-option.selected .lang-opt-name { color: var(--warm-white); }
+  .lang-option.selected .lang-opt-native { color: rgba(255,255,255,0.55); }
+
+  .lang-opt-flag { font-size: 1.2rem; }
+  .lang-opt-name { font-size: 0.85rem; font-weight: 400; color: var(--ink); display: block; }
+  .lang-opt-native { font-size: 0.72rem; font-weight: 300; color: var(--gray); }
+
+  .lang-modal-close {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .lang-close-btn {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    background: none;
+    border: 1px solid var(--light-gray);
+    padding: 0.55rem 1.25rem;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all 0.15s;
+  }
+
+  .lang-close-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* ── ANIMATE ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.22s; }
+  .delay-3 { animation-delay: 0.34s; }
+  .delay-4 { animation-delay: 0.46s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Hair <span>Istanbul</span></a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Hair Istanbul</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-selector" onclick="openLang()">
+      <span class="lang-flag">🇬🇧</span>
+      <span>EN</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2"/></svg>
+    </button>
+    <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Consultation</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding: 0;">
+  <div class="hero-left">
+    <p class="hero-eyebrow fade-up">Istanbul's Premier Hair Clinic</p>
+    <h1 class="hero-title fade-up delay-1">
+      Restore what<br>is <em>naturally</em><br>yours
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      Led by an exclusively Turkish team of board-certified hair restoration surgeons with decades of collective experience — in the world's hair transplant capital.
+    </p>
+    <div class="hero-actions fade-up delay-3">
+      <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Free Consultation</button>
+      <button class="btn-ghost" onclick="document.getElementById('results').scrollIntoView({behavior:'smooth'})">See Results</button>
+    </div>
+    <div class="hero-stats fade-up delay-4">
+      <div>
+        <div class="stat-num">12<span>K+</span></div>
+        <div class="stat-label">Procedures</div>
+      </div>
+      <div>
+        <div class="stat-num">97<span>%</span></div>
+        <div class="stat-label">Satisfaction</div>
+      </div>
+      <div>
+        <div class="stat-num">18</div>
+        <div class="stat-label">Years active</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-placeholder">
+      <svg class="placeholder-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="8" width="56" height="64" rx="2" fill="#9B7A45" opacity="0.3"/>
+        <circle cx="40" cy="30" r="12" fill="#9B7A45" opacity="0.4"/>
+        <path d="M16 72 Q40 48 64 72" fill="#9B7A45" opacity="0.3"/>
+      </svg>
+      <span class="placeholder-text">Hero image placeholder</span>
+    </div>
+    <div class="hero-badge">
+      <div class="badge-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4.5H15l-3.75 2.7 1.5 4.5L9 11.1l-3.75 2.6 1.5-4.5L3 6.5h4.5z" fill="white"/></svg>
+      </div>
+      <div class="badge-text">
+        <strong>100% Turkish Medical Team</strong>
+        <small>Board-certified specialists only</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><div class="trust-dot"></div><span>FUE & DHI Techniques</span></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-dot"></div><span>Turkish Medical Board Certified</span></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-dot"></div><span>All-inclusive Packages</span></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-dot"></div><span>Multilingual Patient Coordinators</span></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-dot"></div><span>12-month Follow-up Care</span></div>
+</div>
+
+<!-- WHY ISTANBUL -->
+<section class="why-section" id="why">
+  <div class="why-left">
+    <p class="section-label">Why Hair Istanbul</p>
+    <h2 class="section-title">Turkish craft,<br><em>world-class</em> results</h2>
+    <p class="section-sub">Istanbul has earned its global reputation as the epicentre of hair restoration. Our clinic combines this tradition of excellence with a fully Turkish specialist team — no outsourced staff, no compromise.</p>
+  </div>
+  <div class="why-right">
+    <div class="why-card">
+      <div class="why-card-num">01</div>
+      <div class="why-card-title">Expert surgeons</div>
+      <p class="why-card-text">Every procedure is performed by Turkish surgeons specialised exclusively in hair restoration.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">02</div>
+      <div class="why-card-title">Competitive pricing</div>
+      <p class="why-card-text">World-class outcomes at a fraction of Western European and North American costs.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">03</div>
+      <div class="why-card-title">Full-service care</div>
+      <p class="why-card-text">Airport transfers, 5-star hotel, translation and aftercare all included.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">04</div>
+      <div class="why-card-title">Latest techniques</div>
+      <p class="why-card-text">Sapphire FUE and DHI implantation for maximum density and minimal scarring.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="team-header">
+    <div>
+      <p class="section-label">Our Specialists</p>
+      <h2 class="section-title">Meet the <em>team</em></h2>
+    </div>
+    <p class="section-sub" style="max-width: 26rem; text-align: right;">Every surgeon on our team is Turkish-trained, Turkish-licensed, and dedicated exclusively to hair restoration medicine.</p>
+  </div>
+  <div class="team-grid">
+    <div class="doctor-card">
+      <div class="doctor-photo">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" style="opacity:0.25"><circle cx="30" cy="22" r="14" fill="#C9A96E"/><path d="M8 56 Q30 38 52 56" fill="#C9A96E"/></svg>
+      </div>
+      <div class="doctor-info">
+        <div class="doctor-title">Lead Surgeon</div>
+        <div class="doctor-name">Dr. Mehmet Yıldız</div>
+        <div class="doctor-spec">FUE & Sapphire DHI specialist. 14 years of experience, 4,800+ procedures performed.</div>
+        <div class="doctor-badge">🇹🇷 Turkish Board Certified</div>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-photo">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" style="opacity:0.25"><circle cx="30" cy="22" r="14" fill="#C9A96E"/><path d="M8 56 Q30 38 52 56" fill="#C9A96E"/></svg>
+      </div>
+      <div class="doctor-info">
+        <div class="doctor-title">Hair Restoration Surgeon</div>
+        <div class="doctor-name">Dr. Ayşe Kaya</div>
+        <div class="doctor-spec">Micro-grafting pioneer. Specialist in female hair loss and hairline reconstruction.</div>
+        <div class="doctor-badge">🇹🇷 Turkish Board Certified</div>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-photo">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" style="opacity:0.25"><circle cx="30" cy="22" r="14" fill="#C9A96E"/><path d="M8 56 Q30 38 52 56" fill="#C9A96E"/></svg>
+      </div>
+      <div class="doctor-info">
+        <div class="doctor-title">Trichology Consultant</div>
+        <div class="doctor-name">Dr. Emre Çelik</div>
+        <div class="doctor-spec">Hair health and density analysis expert. Oversees post-operative recovery programmes.</div>
+        <div class="doctor-badge">🇹🇷 Turkish Board Certified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="ba-section" id="results" style="padding: 7rem 6rem;">
+  <div class="ba-header">
+    <div>
+      <p class="section-label">Real Results</p>
+      <h2 class="section-title">Before &amp; <em>After</em></h2>
+    </div>
+    <p class="section-sub">All photos are unretouched results from our patients. Individual outcomes may vary.</p>
+  </div>
+  <div class="ba-grid">
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-img ba-img-before">
+          <span class="ba-label">Before</span>
+        </div>
+        <div class="ba-img ba-img-after">
+          <span class="ba-label ba-after-label">12 months</span>
+        </div>
+      </div>
+      <div class="ba-meta">
+        <span class="ba-months">Case #001 · FUE</span>
+        <span class="ba-grafts">3,200 grafts</span>
+      </div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-img ba-img-before" style="background: linear-gradient(160deg, #182524 0%, #101a1a 100%);">
+          <span class="ba-label">Before</span>
+        </div>
+        <div class="ba-img ba-img-after" style="background: linear-gradient(160deg, #203433 0%, #0e2628 100%);">
+          <span class="ba-label ba-after-label">10 months</span>
+        </div>
+      </div>
+      <div class="ba-meta">
+        <span class="ba-months">Case #002 · DHI</span>
+        <span class="ba-grafts">2,800 grafts</span>
+      </div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-img ba-img-before" style="background: linear-gradient(160deg, #1c2122 0%, #141717 100%);">
+          <span class="ba-label">Before</span>
+        </div>
+        <div class="ba-img ba-img-after" style="background: linear-gradient(160deg, #28302f 0%, #1c2424 100%);">
+          <span class="ba-label ba-after-label">14 months</span>
+        </div>
+      </div>
+      <div class="ba-meta">
+        <span class="ba-months">Case #003 · Sapphire FUE</span>
+        <span class="ba-grafts">4,100 grafts</span>
+      </div>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 1rem;">
+    <button class="btn-ghost" style="border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);">View full gallery</button>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">Your journey to <em>restoration</em></h2>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Free consultation</div>
+      <p class="step-text">Share photos and details online. Our medical team analyses your hair loss pattern and estimates the graft count needed.</p>
+      <span class="step-tag">Online or in-person</span>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Travel & arrival</div>
+      <p class="step-text">We coordinate your Istanbul travel, hotel stay, and private airport transfer. Your coordinator meets you on arrival.</p>
+      <span class="step-tag">All-inclusive</span>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Procedure day</div>
+      <p class="step-text">Your surgeon performs the transplant under local anaesthesia. Sapphire FUE or DHI — whichever suits your case best.</p>
+      <span class="step-tag">6–8 hours</span>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Aftercare & growth</div>
+      <p class="step-text">Full written care instructions. Monthly check-ins with your trichologist. Results visible from month 4, complete by month 12.</p>
+      <span class="step-tag">12-month follow-up</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <p class="section-label">Patient stories</p>
+  <h2 class="section-title">What our patients <em>say</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">The team made me feel completely at ease. The result at 10 months exceeded every expectation I had going in.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar"></div>
+        <div>
+          <div class="author-name">James T.</div>
+          <div class="author-origin">London, United Kingdom</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">From the airport pickup to my final check-in, everything was seamless. Dr. Yıldız is truly exceptional at what he does.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar"></div>
+        <div>
+          <div class="author-name">Marco B.</div>
+          <div class="author-origin">Milan, Italy</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">I researched clinics for two years. Hair Istanbul was the only one where every surgeon was Turkish-trained. Worth the wait.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar"></div>
+        <div>
+          <div class="author-name">Sven H.</div>
+          <div class="author-origin">Stockholm, Sweden</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking-section" id="booking">
+  <div class="booking-left">
+    <p class="section-label">Get started</p>
+    <h2 class="section-title">Book your free<br><em>consultation</em></h2>
+    <p class="section-sub">No commitment, no pressure. A 30-minute video call with one of our patient coordinators to understand your goals and answer every question.</p>
+    <div class="booking-promise">
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <div class="promise-text">
+          <strong>Fully confidential</strong>
+          Your details and photos are never shared outside our medical team.
+        </div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <div class="promise-text">
+          <strong>No obligation</strong>
+          The consultation is entirely free. Proceed only when you're ready.
+        </div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <div class="promise-text">
+          <strong>Multilingual support</strong>
+          Coordinators available in English, Arabic, German, French and more.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="booking-form">
+    <div class="form-title">Request a consultation</div>
+    <div class="form-sub">We'll confirm your slot within 24 hours</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">First name</label>
+        <input class="form-input" type="text" placeholder="John">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last name</label>
+        <input class="form-input" type="text" placeholder="Smith">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" type="email" placeholder="john@example.com">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Country</label>
+        <select class="form-input">
+          <option>United Kingdom</option>
+          <option>Germany</option>
+          <option>United States</option>
+          <option>Sweden</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hair loss stage</label>
+        <select class="form-input">
+          <option>Early (Norwood II–III)</option>
+          <option>Moderate (Norwood IV)</option>
+          <option>Advanced (Norwood V–VI)</option>
+          <option>Not sure</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom: 0.75rem; display: block;">Preferred date</label>
+      <div class="date-grid">
+        <div class="date-slot" onclick="selectDate(this)"><div class="date-day">Mon</div><div class="date-num">21</div></div>
+        <div class="date-slot" onclick="selectDate(this)"><div class="date-day">Tue</div><div class="date-num">22</div></div>
+        <div class="date-slot active" onclick="selectDate(this)"><div class="date-day">Wed</div><div class="date-num">23</div></div>
+        <div class="date-slot" onclick="selectDate(this)"><div class="date-day">Thu</div><div class="date-num">24</div></div>
+        <div class="date-slot" onclick="selectDate(this)"><div class="date-day">Fri</div><div class="date-num">25</div></div>
+      </div>
+    </div>
+
+    <button class="btn-primary" style="width: 100%; padding: 1rem; font-size: 0.82rem; margin-top: 0.5rem;">Request free consultation</button>
+
+    <p class="form-note">By submitting you agree to our privacy policy. We never share personal data with third parties.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Hair <span>Istanbul</span></div>
+      <div class="footer-tagline">Istanbul's premium hair restoration clinic, led by an exclusively Turkish team of certified surgeons.</div>
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="lang-selector" onclick="openLang()" style="border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);">
+          <span class="lang-flag">🇬🇧</span> <span>EN</span>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Clinic</div>
+      <ul class="footer-links">
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Our team</a></li>
+        <li><a href="#">Techniques</a></li>
+        <li><a href="#">Results gallery</a></li>
+        <li><a href="#">Packages & pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Information</div>
+      <ul class="footer-links">
+        <li><a href="#">FUE explained</a></li>
+        <li><a href="#">DHI explained</a></li>
+        <li><a href="#">Recovery guide</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Patient portal</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <div class="footer-col-title">Contact</div>
+      <p>Nişantaşı, Istanbul<br>Turkey 34367</p>
+      <p style="margin-top: 0.75rem;">+90 (212) 000 0000</p>
+      <p>hello@hairistanbul.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Hair Istanbul. All rights reserved.</span>
+    <div class="footer-langs">
+      <button class="footer-lang active">EN</button>
+      <button class="footer-lang">TR</button>
+      <button class="footer-lang">DE</button>
+      <button class="footer-lang">AR</button>
+      <button class="footer-lang">FR</button>
+      <button class="footer-lang">RU</button>
+    </div>
+  </div>
+</footer>
+
+<!-- LANGUAGE MODAL -->
+<div class="lang-modal-overlay" id="langModal" onclick="closeLangOnOverlay(event)">
+  <div class="lang-modal">
+    <div class="lang-modal-title">Choose your language</div>
+    <div class="lang-modal-sub">Select your preferred language for the Hair Istanbul website</div>
+    <div class="lang-options">
+      <button class="lang-option selected" onclick="selectLang(this, 'EN', '🇬🇧')">
+        <span class="lang-opt-flag">🇬🇧</span>
+        <div><span class="lang-opt-name">English</span><span class="lang-opt-native">English</span></div>
+      </button>
+      <button class="lang-option" onclick="selectLang(this, 'TR', '🇹🇷')">
+        <span class="lang-opt-flag">🇹🇷</span>
+        <div><span class="lang-opt-name">Turkish</span><span class="lang-opt-native">Türkçe</span></div>
+      </button>
+      <button class="lang-option" onclick="selectLang(this, 'DE', '🇩🇪')">
+        <span class="lang-opt-flag">🇩🇪</span>
+        <div><span class="lang-opt-name">German</span><span class="lang-opt-native">Deutsch</span></div>
+      </button>
+      <button class="lang-option" onclick="selectLang(this, 'AR', '🇸🇦')">
+        <span class="lang-opt-flag">🇸🇦</span>
+        <div><span class="lang-opt-name">Arabic</span><span class="lang-opt-native">العربية</span></div>
+      </button>
+      <button class="lang-option" onclick="selectLang(this, 'FR', '🇫🇷')">
+        <span class="lang-opt-flag">🇫🇷</span>
+        <div><span class="lang-opt-name">French</span><span class="lang-opt-native">Français</span></div>
+      </button>
+      <button class="lang-option" onclick="selectLang(this, 'RU', '🇷🇺')">
+        <span class="lang-opt-flag">🇷🇺</span>
+        <div><span class="lang-opt-name">Russian</span><span class="lang-opt-native">Русский</span></div>
+      </button>
+    </div>
+    <div class="lang-modal-close">
+      <button class="lang-close-btn" onclick="closeLang()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openLang() {
+    document.getElementById('langModal').classList.add('open');
+  }
+  function closeLang() {
+    document.getElementById('langModal').classList.remove('open');
+  }
+  function closeLangOnOverlay(e) {
+    if (e.target === document.getElementById('langModal')) closeLang();
+  }
+  function selectLang(el, code, flag) {
+    document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    document.querySelectorAll('.lang-selector').forEach(btn => {
+      btn.querySelector('.lang-flag').textContent = flag;
+      btn.querySelectorAll('span')[1].textContent = code;
+    });
+    document.querySelectorAll('.footer-lang').forEach(b => {
+      b.classList.toggle('active', b.textContent === code);
+    });
+    setTimeout(closeLang, 350);
+  }
+  function selectDate(el) {
+    document.querySelectorAll('.date-slot').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 20 ? '0 2px 24px rgba(0,0,0,0.06)' : 'none';
+  });
+</script>
+</body>
+</html>

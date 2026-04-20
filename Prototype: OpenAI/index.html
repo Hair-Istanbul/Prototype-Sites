@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Istanbul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #007BFF;
+    --gold-light: #17A2B8;
+    --dark: #0d0d0d;
+    --dark-2: #161616;
+    --dark-3: #222;
+    --muted: #888;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+  select {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.35rem 0.6rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    outline: none;
+  }
+
+  select option { background: var(--dark-2); }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .btn-light {
+    background: #fff;
+    color: var(--dark);
+  }
+
+  .btn-light:hover { background: var(--gold-light); }
+
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .btn-gold:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, rgba(0,123,255,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 600;
+    line-height: 1.1;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 em { color: var(--gold); font-style: normal; }
+
+  .hero p {
+    color: var(--muted);
+    max-width: 500px;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+
+  .hero-line {
+    position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    opacity: 0;
+    animation: fadeIn 1s 1.2s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  /* WHY SECTION */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .why-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+
+  .why-image {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(0,123,255,0.15);
+    border-radius: 2px;
+  }
+
+  /* STATS */
+  .stats {
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+
+  .stats-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label { color: var(--muted); font-size: 0.85rem; }
+
+  /* BEFORE AFTER */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .ba-card {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #333;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .ba-card:hover { border-color: rgba(0,123,255,0.3); }
+
+  .ba-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 100%;
+    background: var(--border);
+  }
+
+  .ba-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: #2a2a2a;
+  }
+
+  /* BOOKING */
+  .booking-inner {
+    max-width: 560px;
+    margin: 3rem auto 0;
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2.5rem;
+  }
+
+  .form-group { margin-bottom: 1rem; }
+
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: #fff;
+    padding: 0.7rem 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus { border-color: rgba(0,123,255,0.5); }
+
+  .form-group input::placeholder { color: #444; }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.85rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .form-note {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: #444;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #444;
+    font-size: 0.8rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Hair <span>Istanbul</span></a>
+  <div class="nav-right">
+    <select aria-label="Language">
+      <option>EN</option>
+      <option>TR</option>
+      <option>AR</option>
+    </select>
+    <a href="#booking" class="btn btn-light">Book Now</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Istanbul · Turkey</p>
+  <h1>Premium Hair Transplant<br>in <em>Morocco</em></h1>
+  <p>A fully Turkish professional team delivering world-class results for international patients.</p>
+  <div class="hero-cta">
+    <a href="#booking" class="btn btn-gold">Get Consultation</a>
+    <a href="#about" class="btn btn-outline">Learn More</a>
+  </div>
+  <div class="hero-line"></div>
+</section>
+
+<div class="stats">
+  <div class="stats-grid">
+    <div>
+      <span class="stat-num">5,000+</span>
+      <span class="stat-label">Successful Procedures</span>
+    </div>
+    <div>
+      <span class="stat-num">98%</span>
+      <span class="stat-label">Patient Satisfaction</span>
+    </div>
+    <div>
+      <span class="stat-num">12+</span>
+      <span class="stat-label">Years of Experience</span>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-text">
+        <p class="section-label">Why Hair Istanbul</p>
+        <h2>Precision, Artistry, and Care</h2>
+        <p>Our clinic is powered by an experienced Turkish medical team specializing in modern hair transplant techniques. We combine precision with artistry to ensure natural-looking results tailored to each patient.</p>
+        <p>From your first consultation to your final follow-up, our team is with you at every step — guiding you through a seamless, fully supported experience in Istanbul.</p>
+        <a href="#booking" class="btn btn-outline" style="margin-top:0.5rem">Schedule a Call</a>
+      </div>
+      <div class="why-image">
+        <span>Clinic Photo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results" style="padding-top:0;">
+  <div class="container">
+    <p class="section-label">Gallery</p>
+    <h2>Before &amp; After Results</h2>
+    <div class="ba-grid">
+      <div class="ba-card">
+        <span class="ba-num">01</span>
+        <span>Before / After</span>
+      </div>
+      <div class="ba-card">
+        <span class="ba-num">02</span>
+        <span>Before / After</span>
+      </div>
+      <div class="ba-card">
+        <span class="ba-num">03</span>
+        <span>Before / After</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="container" style="text-align:center;">
+    <p class="section-label">Appointments</p>
+    <h2>Book Your Consultation</h2>
+    <p style="color:var(--muted); max-width:400px; margin: 0 auto;">Fill in your details and our team will reach out within 24 hours.</p>
+    <div class="booking-inner">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input id="name" type="text" placeholder="e.g. John Smith">
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel" placeholder="+1 000 000 0000">
+      </div>
+      <div class="form-group">
+        <label for="service">Service</label>
+        <select id="service">
+          <option value="">Select a service</option>
+          <option>Hair Transplant</option>
+          <option>Free Consultation</option>
+        </select>
+      </div>
+      <button class="btn btn-gold form-submit" onclick="handleSubmit()">Request Appointment</button>
+      <p class="form-note">Prototype — no data is submitted</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Hair Istanbul. All rights reserved.</span>
+  <span>Istanbul, Turkey</span>
+</footer>
+
+<script>
+function handleSubmit() {
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Request Sent ✓';
+  btn.style.background = '#2a5a2a';
+  btn.style.color = '#aeffae';
+  btn.disabled = true;
+}
+</script>
+
+</body>
+</html>

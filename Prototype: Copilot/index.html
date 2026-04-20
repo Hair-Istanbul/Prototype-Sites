@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Istanbul - Hair Transplant Clinic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9fafb;
+        }
+
+        /* Navigation & Header */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0D9488;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .language-select {
+            padding: 8px 12px;
+            border: 2px solid #0D9488;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #fff;
+            color: #0D9488;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .language-select:hover {
+            background-color: #0D9488;
+            color: #fff;
+        }
+
+        .cta-btn {
+            padding: 12px 28px;
+            background-color: #0D9488;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background-color: #0a7368;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0D9488 0%, #14b8a6 100%);
+            color: #fff;
+            padding: 120px 50px;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero .tagline {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .hero .accent {
+            color: #007BFF;
+            font-weight: 700;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 50px;
+            background-color: #fff;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #0D9488;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: #f0fdf4;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            border-color: #0D9488;
+            box-shadow: 0 15px 40px rgba(13, 148, 136, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #0D9488;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 50px;
+            background-color: #f9fafb;
+        }
+
+        .gallery h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #0D9488;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            background: #e0e7ff;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            border: 2px solid #d0d5dd;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(13, 148, 136, 0.2);
+        }
+
+        .gallery-label {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 80px 50px;
+            background-color: #fff;
+        }
+
+        .team h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #0D9488;
+        }
+
+        .team-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            background: #f0fdf4;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .team-member:hover {
+            border-color: #0D9488;
+            box-shadow: 0 15px 40px rgba(13, 148, 136, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #d0e7e6 0%, #c0dcd9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .member-info {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .member-info h3 {
+            color: #0D9488;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .member-title {
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .member-info p {
+            color: #999;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #0D9488;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #0D9488;
+        }
+
+        .stars {
+            color: #007BFF;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            color: #0D9488;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: #999;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #0D9488;
+        }
+
+        .modal h3 {
+            color: #0D9488;
+            font-size: 28px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal label {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .modal input, .modal select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal input:focus, .modal select:focus {
+            outline: none;
+            border-color: #0D9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .modal input[type="submit"] {
+            background-color: #0D9488;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .modal input[type="submit"]:hover {
+            background-color: #0a7368;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            text-align: center;
+            padding: 40px;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        footer h3 {
+            color: #0D9488;
+            margin-bottom: 15px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            color: #0D9488;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #0D9488;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero .subtitle {
+                font-size: 18px;
+            }
+
+            .services, .gallery, .team, .testimonials {
+                padding: 40px 20px;
+            }
+
+            .services h2, .gallery h2, .team h2, .testimonials h2 {
+                font-size: 32px;
+                margin-bottom: 40px;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 30% auto;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Hair Istanbul</div>
+        <div class="nav-right">
+            <select class="language-select" id="language">
+                <option value="en">English</option>
+                <option value="tr">Türkçe</option>
+                <option value="ar">العربية</option>
+            </select>
+            <button class="cta-btn" id="bookBtn">Book Appointment</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Hair Istanbul</h1>
+        <div class="subtitle">Transform Your Hair, Transform Your Life</div>
+        <p class="tagline">Premium hair transplant services by our world-class Turkish doctors</p>
+        <button class="cta-btn" style="background-color: #f0fdf4; color: #0d9488;" id="heroBookBtn">Start Your Journey</button>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">✂️</div>
+                <h3>FUE Hair Transplant</h3>
+                <p>Advanced follicular unit extraction for natural-looking results with minimal scarring.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔬</div>
+                <h3>FUT Hair Transplant</h3>
+                <p>Traditional follicular unit transplantation technique for maximum graft extraction.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💎</div>
+                <h3>DHI Hair Implants</h3>
+                <p>Direct hair implantation using advanced technology for superior precision and density.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🧴</div>
+                <h3>Hair Treatments</h3>
+                <p>Complementary treatments and aftercare protocols for optimal results.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👨‍⚕️</div>
+                <h3>Expert Consultation</h3>
+                <p>Free initial consultation with our experienced Turkish specialists.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>International Support</h3>
+                <p>Dedicated support for international patients including accommodation assistance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before & After Gallery -->
+    <section class="gallery">
+        <h2>Before & After Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 1 - Before</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 1 - After</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 2 - Before</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 2 - After</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 3 - Before</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 3 - After</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 4 - Before</div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-label">Patient 4 - After</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <h2>Our Professional Turkish Team</h2>
+        <p class="team-subtitle">Our highly qualified and experienced surgeons are dedicated to providing you with exceptional results using the latest techniques.</p>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-image">Doctor Image</div>
+                <div class="member-info">
+                    <h3>Dr. Mehmet Kaya</h3>
+                    <div class="member-title">Chief Surgeon</div>
+                    <p>20+ years of experience in hair transplantation with thousands of successful procedures.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">Doctor Image</div>
+                <div class="member-info">
+                    <h3>Dr. Ayşe Demir</h3>
+                    <div class="member-title">Senior Specialist</div>
+                    <p>Expert in FUE techniques and natural hairline design with international certifications.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">Doctor Image</div>
+                <div class="member-info">
+                    <h3>Dr. Emre Yıldız</h3>
+                    <div class="member-title">Hair Restoration Expert</div>
+                    <p>Specialized in complex cases and revision procedures with proven success rates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2>Patient Testimonials</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The entire experience was professional and stress-free. The results exceeded my expectations!"</p>
+                <div class="testimonial-author">- James M.</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Dr. Kaya and his team are incredibly skilled. I couldn't be happier with my hair transplant results."</p>
+                <div class="testimonial-author">- Ahmed S.</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Exceptional care, professional staff, and outstanding results. Highly recommended for anyone considering surgery."</p>
+                <div class="testimonial-author">- Michael P.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p>📍 Istanbul, Turkey</p>
+                <p>📞 +90 (555) XXX-XXXX</p>
+                <p>✉️ info@hairistanbul.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="#services">Services</a></p>
+                <p><a href="#gallery">Gallery</a></p>
+                <p><a href="#team">Our Team</a></p>
+                <p><a href="#testimonials">Testimonials</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Information</h4>
+                <p><a href="#">Privacy Policy</a></p>
+                <p><a href="#">Terms of Service</a></p>
+                <p><a href="#">FAQ</a></p>
+                <p><a href="#">Blog</a></p>
+            </div>
+        </div>
+        <p>&copy; 2026 Hair Istanbul. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Book an Appointment</h3>
+            <form>
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
+                <label for="service">Service *</label>
+                <select id="service" required>
+                    <option value="">Select a service</option>
+                    <option value="fue">FUE Hair Transplant</option>
+                    <option value="fut">FUT Hair Transplant</option>
+                    <option value="dhi">DHI Hair Implants</option>
+                    <option value="consultation">Free Consultation</option>
+                </select>
+
+                <label for="date">Preferred Date *</label>
+                <input type="date" id="date" required>
+
+                <label for="message">Message (Optional)</label>
+                <input type="text" id="message" placeholder="Tell us more about your expectations">
+
+                <input type="submit" value="Book Appointment">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('appointmentModal');
+        const bookBtn = document.getElementById('bookBtn');
+        const heroBookBtn = document.getElementById('heroBookBtn');
+        const closeBtn = document.querySelector('.close');
+
+        bookBtn.onclick = () => {
+            modal.style.display = 'block';
+        }
+
+        heroBookBtn.onclick = () => {
+            modal.style.display = 'block';
+        }
+
+        closeBtn.onclick = () => {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Language selection (visual only - no actual translation)
+        document.getElementById('language').addEventListener('change', (e) => {
+            console.log('Language selected:', e.target.value);
+        });
+
+        // Form submission (visual only)
+        document.querySelector('.modal form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! This is a prototype. In the production version, your appointment would be booked here.');
+            modal.style.display = 'none';
+            document.querySelector('.modal form').reset();
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

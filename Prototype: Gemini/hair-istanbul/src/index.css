@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  
+  /* Sleek Theme Colors */
+  --color-slate-soft: #f1f5f9;
+  --color-gold: #d4af37;
+  --color-gold-text: #b8860b;
+  --color-accent-bg: #0f172a;
+  --color-brand-offwhite: #fcfcfc;
+  --color-brand-charcoal: #0f172a;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-offwhite text-slate-900 font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

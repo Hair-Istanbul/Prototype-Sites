@@ -54,18 +54,23 @@
   .nav-right { display: flex; align-items: center; gap: 1.5rem; }
 
   select {
-    background: transparent;
+    background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 0.35rem 0.6rem;
-    border-radius: 4px;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border-radius: 2px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     cursor: pointer;
     outline: none;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+    background-position: calc(100% - 1rem) center, calc(100% - 0.75rem) center;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
   }
 
-  select option { background: var(--dark-2); }
+  select option { background: var(--dark-2); color: #fff; }
 
   .btn {
     display: inline-block;
@@ -101,6 +106,46 @@
   }
 
   .btn-gold:hover { background: var(--gold-light); }
+
+  .btn.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  .btn.loading .btn-text {
+    opacity: 0.8;
+  }
+
+  .btn.loading::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    height: 3px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .btn.loading::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    height: 3px;
+    width: 0;
+    background: rgba(255,255,255,0.95);
+    border-radius: 999px;
+    animation: loadingBar 1.5s linear infinite;
+  }
+
+  @keyframes loadingBar {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; }
+  }
 
   /* HERO */
   .hero {
@@ -307,12 +352,153 @@
 
   /* BOOKING */
   .booking-inner {
-    max-width: 560px;
+    max-width: 640px;
     margin: 3rem auto 0;
     background: var(--dark-2);
     border: 1px solid var(--border);
     border-radius: 2px;
     padding: 2.5rem;
+  }
+
+  .booking-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .phone-input-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .phone-input-wrapper input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .custom-dropdown {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    font-size: 0.9rem;
+  }
+
+  .phone-input-wrapper .custom-dropdown {
+    flex: 0 0 150px;
+    width: 150px;
+    min-width: 150px;
+  }
+
+  .nav-right .custom-dropdown {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .custom-dropdown-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: rgba(255,255,255,0.04);
+    color: #fff;
+    padding: 0.75rem 0.9rem;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .custom-dropdown-trigger:hover {
+    border-color: rgba(0,123,255,0.5);
+  }
+
+  .dropdown-arrow {
+    color: var(--gold);
+    font-size: 0.9rem;
+  }
+
+  .custom-options {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    max-height: 320px;
+    overflow: hidden;
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 10;
+  }
+
+  .custom-options.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .country-search {
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .country-search input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: #fff;
+    padding: 0.55rem 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .country-search input:focus {
+    border-color: rgba(0,123,255,0.5);
+  }
+
+  .options-list {
+    max-height: 250px;
+    overflow-y: auto;
+  }
+
+  .custom-option {
+    padding: 0.75rem 0.9rem;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .custom-option:hover,
+  .custom-option[aria-selected="true"] {
+    background: rgba(0,123,255,0.15);
+  }
+
+  .custom-option span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
   }
 
   .form-group { margin-bottom: 1rem; }
@@ -372,13 +558,48 @@
     font-size: 0.8rem;
   }
 
+  /* TECHNOLOGY */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .tech-item {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2rem;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .tech-item:hover { border-color: rgba(0,123,255,0.3); }
+
+  .tech-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .tech-item p {
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.25rem; }
     .why-grid { grid-template-columns: 1fr; gap: 2rem; }
     .ba-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .tech-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .phone-input-wrapper { flex-direction: column; }
+    .custom-dropdown { width: 100%; max-width: none; }
   }
 </style>
 </head>
@@ -387,17 +608,22 @@
 <nav>
   <a href="#" class="nav-logo">Hair <span>Istanbul</span></a>
   <div class="nav-right">
-    <select aria-label="Language">
-      <option>EN</option>
-      <option>TR</option>
-      <option>AR</option>
-    </select>
+    <div class="custom-dropdown" id="languageDropdown">
+      <button type="button" class="custom-dropdown-trigger" id="languageDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
+        <span class="dropdown-value">EN</span>
+        <span class="dropdown-arrow">▾</span>
+      </button>
+      <div class="custom-options" id="languageOptions" role="listbox" tabindex="-1">
+        <div class="options-list" id="languageOptionsList"></div>
+      </div>
+      <input type="hidden" id="language" value="EN">
+    </div>
     <a href="#booking" class="btn btn-light">Book Now</a>
   </div>
 </nav>
 
 <section class="hero">
-  <p class="hero-eyebrow">Istanbul · Turkey</p>
+  <p class="hero-eyebrow">Turkish team, Morocco based.</p>
   <h1>Premium Hair Transplant<br>in <em>Morocco</em></h1>
   <p>A fully Turkish professional team delivering world-class results for international patients.</p>
   <div class="hero-cta">
@@ -410,7 +636,7 @@
 <div class="stats">
   <div class="stats-grid">
     <div>
-      <span class="stat-num">5,000+</span>
+      <span class="stat-num">3,000+</span>
       <span class="stat-label">Successful Procedures</span>
     </div>
     <div>
@@ -418,7 +644,7 @@
       <span class="stat-label">Patient Satisfaction</span>
     </div>
     <div>
-      <span class="stat-num">12+</span>
+      <span class="stat-num">9+</span>
       <span class="stat-label">Years of Experience</span>
     </div>
   </div>
@@ -436,6 +662,27 @@
       </div>
       <div class="why-image">
         <span>Clinic Photo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="technology">
+  <div class="container">
+    <p class="section-label">Technology</p>
+    <h2>Advanced Hair Transplant Techniques</h2>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <h3>Safir Technique</h3>
+        <p>Utilizing the latest Sapphire FUE method for precise, minimally invasive hair follicle extraction, ensuring maximum graft survival and natural results.</p>
+      </div>
+      <div class="tech-item">
+        <h3>Fully Professional Turkish Team</h3>
+        <p>Our expert Turkish medical professionals bring years of specialized experience in hair restoration, combining traditional techniques with modern innovations.</p>
+      </div>
+      <div class="tech-item">
+        <h3>Painless Local Anesthesia</h3>
+        <p>Advanced sedation and local anesthesia techniques ensure a comfortable, pain-free procedure from start to finish, prioritizing patient comfort.</p>
       </div>
     </div>
   </div>
@@ -468,45 +715,807 @@
     <h2>Book Your Consultation</h2>
     <p style="color:var(--muted); max-width:400px; margin: 0 auto;">Fill in your details and our team will reach out within 24 hours.</p>
     <div class="booking-inner">
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input id="name" type="text" placeholder="e.g. John Smith">
+      <div class="booking-grid">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input id="name" type="text" placeholder="e.g. John Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input id="age" type="number" min="19" placeholder="18+" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" type="text" placeholder="e.g. Casablanca" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="service">Type of Service</label>
+            <div class="custom-dropdown" id="serviceDropdown">
+              <button type="button" class="custom-dropdown-trigger" id="serviceDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
+                <span class="dropdown-value">Select a service</span>
+                <span class="dropdown-arrow">▾</span>
+              </button>
+              <div class="custom-options" id="serviceOptions" role="listbox" tabindex="-1">
+                <div class="options-list" id="serviceOptionsList"></div>
+              </div>
+              <input type="hidden" id="service" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="procedure">Hair Transplant / Treatment Type</label>
+            <div class="custom-dropdown" id="procedureDropdown">
+              <button type="button" class="custom-dropdown-trigger" id="procedureDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
+                <span class="dropdown-value">Select an option</span>
+                <span class="dropdown-arrow">▾</span>
+              </button>
+              <div class="custom-options" id="procedureOptions" role="listbox" tabindex="-1">
+                <div class="options-list" id="procedureOptionsList"></div>
+              </div>
+              <input type="hidden" id="procedure" value="">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <div class="phone-input-wrapper">
+            <div class="custom-dropdown" id="countryDropdown">
+              <button type="button" class="custom-dropdown-trigger" id="countryDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
+                <span class="dropdown-value">🇲🇦 +212</span>
+                <span class="dropdown-arrow">▾</span>
+              </button>
+              <div class="custom-options" id="countryOptions" role="listbox" tabindex="-1">
+                <div class="country-search">
+                  <input id="countrySearch" type="search" placeholder="Search code" aria-label="Search country code">
+                </div>
+                <div class="options-list" id="countryOptionsList"></div>
+              </div>
+              <input type="hidden" id="countryCode" value="212">
+            </div>
+            <input id="phone" type="tel" placeholder="6 00 00 00 00" required>
+          </div>
+        </div>
+
+        <button id="whatsappBtn" class="btn btn-gold form-submit" disabled>
+          <span class="btn-text">Complete the form to chat</span>
+        </button>
+        <p id="formNote" class="form-note">Please complete all fields. Users under 18 cannot continue.</p>
       </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input id="email" type="email" placeholder="you@email.com">
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input id="phone" type="tel" placeholder="+1 000 000 0000">
-      </div>
-      <div class="form-group">
-        <label for="service">Service</label>
-        <select id="service">
-          <option value="">Select a service</option>
-          <option>Hair Transplant</option>
-          <option>Free Consultation</option>
-        </select>
-      </div>
-      <button class="btn btn-gold form-submit" onclick="handleSubmit()">Request Appointment</button>
-      <p class="form-note">Prototype — no data is submitted</p>
     </div>
   </div>
 </section>
 
 <footer>
   <span>© 2026 Hair Istanbul. All rights reserved.</span>
-  <span>Istanbul, Turkey</span>
+  <span>Casablanca, Morocco</span>
 </footer>
 
 <script>
-function handleSubmit() {
-  const btn = document.querySelector('.form-submit');
-  btn.textContent = 'Request Sent ✓';
-  btn.style.background = '#2a5a2a';
-  btn.style.color = '#aeffae';
-  btn.disabled = true;
+const whatsappNumber = '212607587070';
+const whatsappBtn = document.getElementById('whatsappBtn');
+const whatsappBtnText = whatsappBtn.querySelector('.btn-text');
+const countryDropdown = document.getElementById('countryDropdown');
+const countryDropdownToggle = document.getElementById('countryDropdownToggle');
+const countryOptions = document.getElementById('countryOptions');
+const countryOptionsList = document.getElementById('countryOptionsList');
+const countrySearch = document.getElementById('countrySearch');
+const countryValue = countryDropdown.querySelector('.dropdown-value');
+
+// Service dropdown elements
+const serviceDropdown = document.getElementById('serviceDropdown');
+const serviceDropdownToggle = document.getElementById('serviceDropdownToggle');
+const serviceOptions = document.getElementById('serviceOptions');
+const serviceOptionsList = document.getElementById('serviceOptionsList');
+const serviceValue = serviceDropdown.querySelector('.dropdown-value');
+
+// Procedure dropdown elements
+const procedureDropdown = document.getElementById('procedureDropdown');
+const procedureDropdownToggle = document.getElementById('procedureDropdownToggle');
+const procedureOptions = document.getElementById('procedureOptions');
+const procedureOptionsList = document.getElementById('procedureOptionsList');
+const procedureValue = procedureDropdown.querySelector('.dropdown-value');
+
+const formFields = [
+  document.getElementById('name'),
+  document.getElementById('age'),
+  document.getElementById('city'),
+  document.getElementById('service'),
+  document.getElementById('procedure'),
+  document.getElementById('phone'),
+  document.getElementById('countryCode'),
+];
+const formNote = document.getElementById('formNote');
+
+const countryList = [
+  { code: '1', emoji: '🇺🇸', label: 'United States' },
+  { code: '7', emoji: '🇷🇺', label: 'Russia' },
+  { code: '20', emoji: '🇪🇬', label: 'Egypt' },
+  { code: '27', emoji: '🇿🇦', label: 'South Africa' },
+  { code: '30', emoji: '🇬🇷', label: 'Greece' },
+  { code: '31', emoji: '🇳🇱', label: 'Netherlands' },
+  { code: '32', emoji: '🇧🇪', label: 'Belgium' },
+  { code: '33', emoji: '🇫🇷', label: 'France' },
+  { code: '34', emoji: '🇪🇸', label: 'Spain' },
+  { code: '36', emoji: '🇭🇺', label: 'Hungary' },
+  { code: '39', emoji: '🇮🇹', label: 'Italy' },
+  { code: '40', emoji: '🇷🇴', label: 'Romania' },
+  { code: '41', emoji: '🇨🇭', label: 'Switzerland' },
+  { code: '43', emoji: '🇦🇹', label: 'Austria' },
+  { code: '44', emoji: '🇬🇧', label: 'United Kingdom' },
+  { code: '45', emoji: '🇩🇰', label: 'Denmark' },
+  { code: '46', emoji: '🇸🇪', label: 'Sweden' },
+  { code: '47', emoji: '🇳🇴', label: 'Norway' },
+  { code: '48', emoji: '🇵🇱', label: 'Poland' },
+  { code: '49', emoji: '🇩🇪', label: 'Germany' },
+  { code: '51', emoji: '🇵🇪', label: 'Peru' },
+  { code: '52', emoji: '🇲🇽', label: 'Mexico' },
+  { code: '53', emoji: '🇨🇺', label: 'Cuba' },
+  { code: '54', emoji: '🇦🇷', label: 'Argentina' },
+  { code: '55', emoji: '🇧🇷', label: 'Brazil' },
+  { code: '56', emoji: '🇨🇱', label: 'Chile' },
+  { code: '57', emoji: '🇨🇴', label: 'Colombia' },
+  { code: '58', emoji: '🇻🇪', label: 'Venezuela' },
+  { code: '60', emoji: '🇲🇾', label: 'Malaysia' },
+  { code: '61', emoji: '🇦🇺', label: 'Australia' },
+  { code: '62', emoji: '🇮🇩', label: 'Indonesia' },
+  { code: '63', emoji: '🇵🇭', label: 'Philippines' },
+  { code: '64', emoji: '🇳🇿', label: 'New Zealand' },
+  { code: '65', emoji: '🇸🇬', label: 'Singapore' },
+  { code: '66', emoji: '🇹🇭', label: 'Thailand' },
+  { code: '81', emoji: '🇯🇵', label: 'Japan' },
+  { code: '82', emoji: '🇰🇷', label: 'South Korea' },
+  { code: '84', emoji: '🇻🇳', label: 'Vietnam' },
+  { code: '86', emoji: '🇨🇳', label: 'China' },
+  { code: '90', emoji: '🇹🇷', label: 'Turkey' },
+  { code: '91', emoji: '🇮🇳', label: 'India' },
+  { code: '92', emoji: '🇵🇰', label: 'Pakistan' },
+  { code: '93', emoji: '🇦🇫', label: 'Afghanistan' },
+  { code: '94', emoji: '🇱🇰', label: 'Sri Lanka' },
+  { code: '95', emoji: '🇲🇲', label: 'Myanmar' },
+  { code: '98', emoji: '🇮🇷', label: 'Iran' },
+  { code: '211', emoji: '🇸🇸', label: 'South Sudan' },
+  { code: '212', emoji: '🇲🇦', label: 'Morocco' },
+  { code: '213', emoji: '🇩🇿', label: 'Algeria' },
+  { code: '216', emoji: '🇹🇳', label: 'Tunisia' },
+  { code: '218', emoji: '🇱🇾', label: 'Libya' },
+  { code: '220', emoji: '🇬🇲', label: 'Gambia' },
+  { code: '221', emoji: '🇸🇳', label: 'Senegal' },
+  { code: '222', emoji: '🇲🇷', label: 'Mauritania' },
+  { code: '223', emoji: '🇲🇱', label: 'Mali' },
+  { code: '224', emoji: '🇬🇳', label: 'Guinea' },
+  { code: '225', emoji: '🇨🇮', label: 'Ivory Coast' },
+  { code: '226', emoji: '🇧🇫', label: 'Burkina Faso' },
+  { code: '227', emoji: '🇳🇪', label: 'Niger' },
+  { code: '228', emoji: '🇹🇬', label: 'Togo' },
+  { code: '229', emoji: '🇧🇯', label: 'Benin' },
+  { code: '230', emoji: '🇲🇺', label: 'Mauritius' },
+  { code: '231', emoji: '🇱🇷', label: 'Liberia' },
+  { code: '232', emoji: '🇸🇱', label: 'Sierra Leone' },
+  { code: '233', emoji: '🇬🇭', label: 'Ghana' },
+  { code: '234', emoji: '🇳🇬', label: 'Nigeria' },
+  { code: '235', emoji: '🇹🇩', label: 'Chad' },
+  { code: '236', emoji: '🇨🇫', label: 'Central African Republic' },
+  { code: '237', emoji: '🇨🇲', label: 'Cameroon' },
+  { code: '238', emoji: '🇨🇻', label: 'Cape Verde' },
+  { code: '239', emoji: '🇸🇹', label: 'Sao Tome and Principe' },
+  { code: '240', emoji: '🇬🇶', label: 'Equatorial Guinea' },
+  { code: '241', emoji: '🇬🇦', label: 'Gabon' },
+  { code: '242', emoji: '🇨🇬', label: 'Republic of the Congo' },
+  { code: '243', emoji: '🇨🇩', label: 'DR Congo' },
+  { code: '244', emoji: '🇦🇴', label: 'Angola' },
+  { code: '245', emoji: '🇬🇼', label: 'Guinea-Bissau' },
+  { code: '246', emoji: '🇮🇨', label: 'British Indian Ocean Territory' },
+  { code: '247', emoji: '🇦🇸', label: 'Ascension Island' },
+  { code: '248', emoji: '🇸🇨', label: 'Seychelles' },
+  { code: '249', emoji: '🇸🇩', label: 'Sudan' },
+  { code: '250', emoji: '🇷🇼', label: 'Rwanda' },
+  { code: '251', emoji: '🇪🇹', label: 'Ethiopia' },
+  { code: '252', emoji: '🇸🇴', label: 'Somalia' },
+  { code: '253', emoji: '🇩🇯', label: 'Djibouti' },
+  { code: '254', emoji: '🇰🇪', label: 'Kenya' },
+  { code: '255', emoji: '🇹🇿', label: 'Tanzania' },
+  { code: '256', emoji: '🇺🇬', label: 'Uganda' },
+  { code: '257', emoji: '🇧🇮', label: 'Burundi' },
+  { code: '258', emoji: '🇲🇿', label: 'Mozambique' },
+  { code: '260', emoji: '🇿🇲', label: 'Zambia' },
+  { code: '261', emoji: '🇲🇬', label: 'Madagascar' },
+  { code: '262', emoji: '🇷🇪', label: 'Reunion' },
+  { code: '263', emoji: '🇿🇼', label: 'Zimbabwe' },
+  { code: '264', emoji: '🇳🇦', label: 'Namibia' },
+  { code: '265', emoji: '🇲🇼', label: 'Malawi' },
+  { code: '266', emoji: '🇱🇸', label: 'Lesotho' },
+  { code: '267', emoji: '🇧🇼', label: 'Botswana' },
+  { code: '268', emoji: '🇸🇿', label: 'Swaziland' },
+  { code: '269', emoji: '🇰🇲', label: 'Comoros' },
+  { code: '290', emoji: '🇸🇭', label: 'Saint Helena' },
+  { code: '291', emoji: '🇪🇷', label: 'Eritrea' },
+  { code: '297', emoji: '🇦🇼', label: 'Aruba' },
+  { code: '298', emoji: '🇫🇴', label: 'Faroe Islands' },
+  { code: '299', emoji: '🇬🇱', label: 'Greenland' },
+  { code: '350', emoji: '🇬🇮', label: 'Gibraltar' },
+  { code: '351', emoji: '🇵🇹', label: 'Portugal' },
+  { code: '352', emoji: '🇱🇺', label: 'Luxembourg' },
+  { code: '353', emoji: '🇮🇪', label: 'Ireland' },
+  { code: '354', emoji: '🇮🇸', label: 'Iceland' },
+  { code: '355', emoji: '🇦🇱', label: 'Albania' },
+  { code: '356', emoji: '🇲🇹', label: 'Malta' },
+  { code: '357', emoji: '🇨🇾', label: 'Cyprus' },
+  { code: '358', emoji: '🇫🇮', label: 'Finland' },
+  { code: '359', emoji: '🇧🇬', label: 'Bulgaria' },
+  { code: '370', emoji: '🇱🇹', label: 'Lithuania' },
+  { code: '371', emoji: '🇱🇻', label: 'Latvia' },
+  { code: '372', emoji: '🇪🇪', label: 'Estonia' },
+  { code: '373', emoji: '🇲🇩', label: 'Moldova' },
+  { code: '374', emoji: '🇦🇲', label: 'Armenia' },
+  { code: '375', emoji: '🇧🇾', label: 'Belarus' },
+  { code: '376', emoji: '🇦🇩', label: 'Andorra' },
+  { code: '377', emoji: '🇲🇨', label: 'Monaco' },
+  { code: '378', emoji: '🇸🇲', label: 'San Marino' },
+  { code: '379', emoji: '🇻🇦', label: 'Vatican City' },
+  { code: '380', emoji: '🇺🇦', label: 'Ukraine' },
+  { code: '381', emoji: '🇷🇸', label: 'Serbia' },
+  { code: '382', emoji: '🇲🇪', label: 'Montenegro' },
+  { code: '383', emoji: '🇽🇰', label: 'Kosovo' },
+  { code: '385', emoji: '🇭🇷', label: 'Croatia' },
+  { code: '386', emoji: '🇸🇮', label: 'Slovenia' },
+  { code: '387', emoji: '🇧🇦', label: 'Bosnia & Herzegovina' },
+  { code: '389', emoji: '🇲🇰', label: 'North Macedonia' },
+  { code: '420', emoji: '🇨🇿', label: 'Czech Republic' },
+  { code: '421', emoji: '🇸🇰', label: 'Slovakia' },
+  { code: '423', emoji: '🇱🇮', label: 'Liechtenstein' },
+  { code: '501', emoji: '🇧🇿', label: 'Belize' },
+  { code: '502', emoji: '🇬🇹', label: 'Guatemala' },
+  { code: '503', emoji: '🇸🇻', label: 'El Salvador' },
+  { code: '504', emoji: '🇭🇳', label: 'Honduras' },
+  { code: '505', emoji: '🇳🇮', label: 'Nicaragua' },
+  { code: '506', emoji: '🇨🇷', label: 'Costa Rica' },
+  { code: '507', emoji: '🇵🇦', label: 'Panama' },
+  { code: '508', emoji: '🇧🇱', label: 'Saint Pierre and Miquelon' },
+  { code: '509', emoji: '🇭🇹', label: 'Haiti' },
+  { code: '590', emoji: '🇫🇷', label: 'Saint Martin' },
+  { code: '591', emoji: '🇧🇴', label: 'Bolivia' },
+  { code: '592', emoji: '🇬🇾', label: 'Guyana' },
+  { code: '593', emoji: '🇪🇨', label: 'Ecuador' },
+  { code: '594', emoji: '🇫🇷', label: 'French Guiana' },
+  { code: '595', emoji: '🇵🇾', label: 'Paraguay' },
+  { code: '596', emoji: '🇫🇷', label: 'Martinique' },
+  { code: '597', emoji: '🇸🇷', label: 'Suriname' },
+  { code: '598', emoji: '🇺🇾', label: 'Uruguay' },
+  { code: '599', emoji: '🇧🇶', label: 'Caribbean Netherlands' },
+  { code: '670', emoji: '🇹🇱', label: 'Timor-Leste' },
+  { code: '672', emoji: '🇦🇺', label: 'Australian External Territories' },
+  { code: '673', emoji: '🇧🇳', label: 'Brunei' },
+  { code: '674', emoji: '🇳🇫', label: 'Norfolk Island' },
+  { code: '675', emoji: '🇵🇬', label: 'Papua New Guinea' },
+  { code: '676', emoji: '🇹🇴', label: 'Tonga' },
+  { code: '677', emoji: '🇸🇧', label: 'Solomon Islands' },
+  { code: '678', emoji: '🇻🇺', label: 'Vanuatu' },
+  { code: '679', emoji: '🇫🇯', label: 'Fiji' },
+  { code: '680', emoji: '🇵🇼', label: 'Palau' },
+  { code: '681', emoji: '🇼🇫', label: 'Wallis and Futuna' },
+  { code: '682', emoji: '🇨🇰', label: 'Cook Islands' },
+  { code: '683', emoji: '🇳🇺', label: 'Niue' },
+  { code: '684', emoji: '🇺🇸', label: 'United States Minor Outlying Islands' },
+  { code: '685', emoji: '🇼🇸', label: 'Samoa' },
+  { code: '686', emoji: '🇰🇮', label: 'Kiribati' },
+  { code: '687', emoji: '🇳🇨', label: 'New Caledonia' },
+  { code: '688', emoji: '🇹🇻', label: 'Tuvalu' },
+  { code: '689', emoji: '🇵🇫', label: 'French Polynesia' },
+  { code: '690', emoji: '🇹🇰', label: 'Tokelau' },
+  { code: '691', emoji: '🇲🇭', label: 'Marshall Islands' },
+  { code: '692', emoji: '🇲🇫', label: 'Federated States of Micronesia' },
+  { code: '850', emoji: '🇰🇵', label: 'North Korea' },
+  { code: '852', emoji: '🇭🇰', label: 'Hong Kong' },
+  { code: '853', emoji: '🇲🇴', label: 'Macau' },
+  { code: '855', emoji: '🇰🇭', label: 'Cambodia' },
+  { code: '856', emoji: '🇱🇦', label: 'Laos' },
+  { code: '880', emoji: '🇧🇩', label: 'Bangladesh' },
+  { code: '886', emoji: '🇹🇼', label: 'Taiwan' },
+  { code: '960', emoji: '🇲🇻', label: 'Maldives' },
+  { code: '961', emoji: '🇱🇧', label: 'Lebanon' },
+  { code: '962', emoji: '🇯🇴', label: 'Jordan' },
+  { code: '963', emoji: '🇸🇾', label: 'Syria' },
+  { code: '964', emoji: '🇮🇶', label: 'Iraq' },
+  { code: '965', emoji: '🇰🇼', label: 'Kuwait' },
+  { code: '966', emoji: '🇸🇦', label: 'Saudi Arabia' },
+  { code: '967', emoji: '🇾🇪', label: 'Yemen' },
+  { code: '968', emoji: '🇴🇲', label: 'Oman' },
+  { code: '971', emoji: '🇦🇪', label: 'United Arab Emirates' },
+  { code: '973', emoji: '🇧🇭', label: 'Bahrain' },
+  { code: '974', emoji: '🇶🇦', label: 'Qatar' },
+  { code: '975', emoji: '🇧🇹', label: 'Bhutan' },
+  { code: '976', emoji: '🇲🇳', label: 'Mongolia' },
+  { code: '977', emoji: '🇳🇵', label: 'Nepal' },
+  { code: '992', emoji: '🇹🇯', label: 'Tajikistan' },
+  { code: '993', emoji: '🇹🇲', label: 'Turkmenistan' },
+  { code: '994', emoji: '🇦🇿', label: 'Azerbaijan' },
+  { code: '995', emoji: '🇬🇪', label: 'Georgia' },
+  { code: '996', emoji: '🇰🇬', label: 'Kyrgyzstan' },
+  { code: '998', emoji: '🇺🇿', label: 'Uzbekistan' },
+];
+
+const serviceList = [
+  { value: 'Hair Transplant', label: 'Hair Transplant' },
+  { value: 'Treatment', label: 'Treatment' },
+];
+
+const procedureList = [
+  { value: 'Hair', label: 'Hair' },
+  { value: 'Beard', label: 'Beard' },
+  { value: 'Eyebrows', label: 'Eyebrows' },
+];
+
+function renderCountryOptions(options = countryList) {
+  countryOptionsList.innerHTML = options.map((country) => `
+    <div class="custom-option" role="option" data-value="${country.code}" data-emoji="${country.emoji}" data-label="${country.label}" tabindex="0">
+      <span>${country.emoji} +${country.code}</span>
+    </div>
+  `).join('');
 }
+
+function closeCountryDropdown() {
+  countryOptions.classList.remove('open');
+  countryDropdownToggle.setAttribute('aria-expanded', 'false');
+}
+
+function openCountryDropdown() {
+  countryOptions.classList.add('open');
+  countryDropdownToggle.setAttribute('aria-expanded', 'true');
+  countrySearch.focus();
+}
+
+function setCountryValue(code, emoji) {
+  document.getElementById('countryCode').value = code;
+  countryValue.textContent = `${emoji} +${code}`;
+  countryOptionsList.querySelectorAll('.custom-option').forEach((option) => {
+    option.setAttribute('aria-selected', option.dataset.value === code ? 'true' : 'false');
+  });
+}
+
+function selectCountryOption(option) {
+  const code = option.dataset.value;
+  const emoji = option.dataset.emoji;
+  setCountryValue(code, emoji);
+  closeCountryDropdown();
+  countrySearch.value = '';
+  renderCountryOptions();
+  validateForm();
+}
+
+function filterCountryOptions(query) {
+  const normalized = query.trim().toLowerCase();
+  const filtered = countryList.filter((country) => {
+    return country.label.toLowerCase().includes(normalized) || country.code.includes(normalized);
+  });
+
+  if (filtered.length === 0) {
+    countryOptionsList.innerHTML = '<div class="custom-option" role="option" aria-disabled="true"><span>No results</span></div>';
+    return;
+  }
+
+  renderCountryOptions(filtered);
+}
+
+countryDropdownToggle.addEventListener('click', (event) => {
+  event.stopPropagation();
+  if (countryOptions.classList.contains('open')) {
+    closeCountryDropdown();
+  } else {
+    openCountryDropdown();
+  }
+});
+
+countryDropdownToggle.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    countryDropdownToggle.click();
+  }
+});
+
+countryOptionsList.addEventListener('click', (event) => {
+  const option = event.target.closest('.custom-option');
+  if (!option || option.getAttribute('aria-disabled') === 'true') return;
+  selectCountryOption(option);
+});
+
+countryOptionsList.addEventListener('keydown', (event) => {
+  const current = document.activeElement;
+  if (!current.classList.contains('custom-option')) return;
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    selectCountryOption(current);
+  }
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const next = current.nextElementSibling || countryOptionsList.firstElementChild;
+    next.focus();
+  }
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prev = current.previousElementSibling || countryOptionsList.lastElementChild;
+    prev.focus();
+  }
+});
+
+countrySearch.addEventListener('input', (event) => {
+  filterCountryOptions(event.target.value);
+});
+
+countrySearch.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const firstOption = countryOptionsList.querySelector('.custom-option:not([aria-disabled="true"])');
+    firstOption?.focus();
+  }
+});
+
+document.addEventListener('click', (event) => {
+  if (!countryDropdown.contains(event.target)) {
+    closeCountryDropdown();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeCountryDropdown();
+  }
+});
+
+renderCountryOptions();
+setCountryValue('212', '🇲🇦', 'Morocco');
+
+// Service dropdown functions
+function renderServiceOptions() {
+  serviceOptionsList.innerHTML = serviceList.map((service) => `
+    <div class="custom-option" role="option" data-value="${service.value}" tabindex="0">
+      <span>${service.label}</span>
+    </div>
+  `).join('');
+}
+
+function closeServiceDropdown() {
+  serviceOptions.classList.remove('open');
+  serviceDropdownToggle.setAttribute('aria-expanded', 'false');
+}
+
+function openServiceDropdown() {
+  serviceOptions.classList.add('open');
+  serviceDropdownToggle.setAttribute('aria-expanded', 'true');
+}
+
+function setServiceValue(value, label) {
+  document.getElementById('service').value = value;
+  serviceValue.textContent = label;
+  serviceOptionsList.querySelectorAll('.custom-option').forEach((option) => {
+    option.setAttribute('aria-selected', option.dataset.value === value ? 'true' : 'false');
+  });
+}
+
+function selectServiceOption(option) {
+  const value = option.dataset.value;
+  const label = option.textContent.trim();
+  setServiceValue(value, label);
+  closeServiceDropdown();
+  validateForm();
+}
+
+// Procedure dropdown functions
+function renderProcedureOptions() {
+  procedureOptionsList.innerHTML = procedureList.map((procedure) => `
+    <div class="custom-option" role="option" data-value="${procedure.value}" tabindex="0">
+      <span>${procedure.label}</span>
+    </div>
+  `).join('');
+}
+
+function closeProcedureDropdown() {
+  procedureOptions.classList.remove('open');
+  procedureDropdownToggle.setAttribute('aria-expanded', 'false');
+}
+
+function openProcedureDropdown() {
+  procedureOptions.classList.add('open');
+  procedureDropdownToggle.setAttribute('aria-expanded', 'true');
+}
+
+function setProcedureValue(value, label) {
+  document.getElementById('procedure').value = value;
+  procedureValue.textContent = label;
+  procedureOptionsList.querySelectorAll('.custom-option').forEach((option) => {
+    option.setAttribute('aria-selected', option.dataset.value === value ? 'true' : 'false');
+  });
+}
+
+function selectProcedureOption(option) {
+  const value = option.dataset.value;
+  const label = option.textContent.trim();
+  setProcedureValue(value, label);
+  closeProcedureDropdown();
+  validateForm();
+}
+
+// Service dropdown event listeners
+serviceDropdownToggle.addEventListener('click', (event) => {
+  event.stopPropagation();
+  if (serviceOptions.classList.contains('open')) {
+    closeServiceDropdown();
+  } else {
+    openServiceDropdown();
+  }
+});
+
+serviceDropdownToggle.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    serviceDropdownToggle.click();
+  }
+});
+
+serviceOptionsList.addEventListener('click', (event) => {
+  const option = event.target.closest('.custom-option');
+  if (!option) return;
+  selectServiceOption(option);
+});
+
+serviceOptionsList.addEventListener('keydown', (event) => {
+  const current = document.activeElement;
+  if (!current.classList.contains('custom-option')) return;
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    selectServiceOption(current);
+  }
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const next = current.nextElementSibling || serviceOptionsList.firstElementChild;
+    next.focus();
+  }
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prev = current.previousElementSibling || serviceOptionsList.lastElementChild;
+    prev.focus();
+  }
+});
+
+// Procedure dropdown event listeners
+procedureDropdownToggle.addEventListener('click', (event) => {
+  event.stopPropagation();
+  if (procedureOptions.classList.contains('open')) {
+    closeProcedureDropdown();
+  } else {
+    openProcedureDropdown();
+  }
+});
+
+procedureDropdownToggle.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    procedureDropdownToggle.click();
+  }
+});
+
+procedureOptionsList.addEventListener('click', (event) => {
+  const option = event.target.closest('.custom-option');
+  if (!option) return;
+  selectProcedureOption(option);
+});
+
+procedureOptionsList.addEventListener('keydown', (event) => {
+  const current = document.activeElement;
+  if (!current.classList.contains('custom-option')) return;
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    selectProcedureOption(current);
+  }
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const next = current.nextElementSibling || procedureOptionsList.firstElementChild;
+    next.focus();
+  }
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prev = current.previousElementSibling || procedureOptionsList.lastElementChild;
+    prev.focus();
+  }
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (event) => {
+  if (!serviceDropdown.contains(event.target)) {
+    closeServiceDropdown();
+  }
+  if (!procedureDropdown.contains(event.target)) {
+    closeProcedureDropdown();
+  }
+  if (!countryDropdown.contains(event.target)) {
+    closeCountryDropdown();
+  }
+  if (!languageDropdown.contains(event.target)) {
+    closeLanguageDropdown();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeServiceDropdown();
+    closeProcedureDropdown();
+    closeCountryDropdown();
+    closeLanguageDropdown();
+  }
+});
+
+// Initialize dropdowns
+const languageDropdown = document.getElementById('languageDropdown');
+const languageDropdownToggle = document.getElementById('languageDropdownToggle');
+const languageOptions = document.getElementById('languageOptions');
+const languageOptionsList = document.getElementById('languageOptionsList');
+const languageValue = languageDropdown.querySelector('.dropdown-value');
+const languageInput = document.getElementById('language');
+
+const languageList = [
+  { value: 'EN', label: 'EN' },
+  { value: 'AR', label: 'AR' },
+  { value: 'FR', label: 'FR' },
+];
+
+function renderLanguageOptions() {
+  languageOptionsList.innerHTML = languageList.map((language) => `
+    <div class="custom-option" role="option" data-value="${language.value}" tabindex="0">
+      <span>${language.label}</span>
+    </div>
+  `).join('');
+}
+
+function closeLanguageDropdown() {
+  languageOptions.classList.remove('open');
+  languageDropdownToggle.setAttribute('aria-expanded', 'false');
+}
+
+function openLanguageDropdown() {
+  languageOptions.classList.add('open');
+  languageDropdownToggle.setAttribute('aria-expanded', 'true');
+}
+
+function setLanguageValue(value, label) {
+  languageInput.value = value;
+  languageValue.textContent = label;
+  languageOptionsList.querySelectorAll('.custom-option').forEach((option) => {
+    option.setAttribute('aria-selected', option.dataset.value === value ? 'true' : 'false');
+  });
+}
+
+function selectLanguageOption(option) {
+  const value = option.dataset.value;
+  const label = option.textContent.trim();
+  setLanguageValue(value, label);
+  closeLanguageDropdown();
+}
+
+languageDropdownToggle.addEventListener('click', (event) => {
+  event.stopPropagation();
+  if (languageOptions.classList.contains('open')) {
+    closeLanguageDropdown();
+  } else {
+    openLanguageDropdown();
+  }
+});
+
+languageDropdownToggle.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    languageDropdownToggle.click();
+  }
+});
+
+languageOptionsList.addEventListener('click', (event) => {
+  const option = event.target.closest('.custom-option');
+  if (!option) return;
+  selectLanguageOption(option);
+});
+
+languageOptionsList.addEventListener('keydown', (event) => {
+  const current = document.activeElement;
+  if (!current.classList.contains('custom-option')) return;
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    selectLanguageOption(current);
+  }
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const next = current.nextElementSibling || languageOptionsList.firstElementChild;
+    next.focus();
+  }
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prev = current.previousElementSibling || languageOptionsList.lastElementChild;
+    prev.focus();
+  }
+});
+
+renderLanguageOptions();
+setLanguageValue('EN', 'EN');
+renderServiceOptions();
+renderProcedureOptions();
+
+function validateForm() {
+  const name = formFields[0].value.trim();
+  const age = Number(formFields[1].value);
+  const city = formFields[2].value.trim();
+  const service = formFields[3].value;
+  const procedure = formFields[4].value;
+  const phone = formFields[5].value.trim();
+
+  const allFilled = name && age && city && service && procedure && phone;
+  const ageValid = age >= 19;
+  const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '\-][A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
+  const nameValid = nameRegex.test(name);
+
+  if (!allFilled) {
+    formNote.textContent = 'Please complete all fields.';
+    whatsappBtnText.textContent = 'Complete the form to chat';
+    whatsappBtn.disabled = true;
+    whatsappBtn.classList.remove('loading');
+    return;
+  }
+
+  if (!nameValid) {
+    formNote.textContent = 'Please enter your full name with at least first and last name.';
+    whatsappBtnText.textContent = 'Enter a valid name';
+    whatsappBtn.disabled = true;
+    whatsappBtn.classList.remove('loading');
+    return;
+  }
+
+  if (!ageValid) {
+    formNote.textContent = 'You must be 19 or older to continue.';
+    whatsappBtnText.textContent = 'Age requirement not met';
+    whatsappBtn.disabled = true;
+    whatsappBtn.classList.remove('loading');
+    return;
+  }
+
+  formNote.textContent = 'All set — click to chat on WhatsApp.';
+  whatsappBtnText.textContent = 'Chat on WhatsApp';
+  whatsappBtn.disabled = false;
+  whatsappBtn.classList.remove('loading');
+}
+
+function openWhatsApp() {
+  const name = formFields[0].value.trim();
+  const age = formFields[1].value.trim();
+  const city = formFields[2].value.trim();
+  const service = formFields[3].value;
+  const procedure = formFields[4].value;
+  const country = formFields[6].value;
+  const phone = formFields[5].value.trim();
+  const message = `Hello! My name is ${name}. I am ${age} years old, from ${city}. I need ${service} for my ${procedure}. My phone number is +${country}${phone}.`;
+  window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+}
+
+formFields.forEach((field) => {
+  field.addEventListener('input', validateForm);
+  field.addEventListener('change', validateForm);
+});
+
+whatsappBtn.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (!whatsappBtn.disabled) {
+    whatsappBtn.disabled = true;
+    whatsappBtnText.textContent = 'Redirecting...';
+    whatsappBtn.classList.add('loading');
+    openWhatsApp();
+    setTimeout(() => {
+      if (!whatsappBtn.disabled) return;
+      validateForm();
+    }, 2500);
+  }
+});
+
+validateForm();
 </script>
 
 </body>

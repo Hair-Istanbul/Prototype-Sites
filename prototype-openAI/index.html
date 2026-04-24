@@ -5,29 +5,145 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hair Istanbul</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
+    color-scheme: light dark;
+  }
+
+  /* Dark Mode (Default) */
+  :root {
+    --bg: #0d0d0d;
+    --bg-2: #161616;
+    --bg-3: #222;
+    --text: #ffffff;
+    --text-muted: #b3b3b3;
     --gold: #007BFF;
     --gold-light: #17A2B8;
-    --dark: #0d0d0d;
+    --border: rgba(255,255,255,0.08);
+    --gradient-accent: rgba(0, 123, 255, 0.08);
+    --gradient-accent-light: rgba(0, 123, 255, 0.03);
     --dark-2: #161616;
     --dark-3: #222;
-    --muted: #888;
-    --border: rgba(255,255,255,0.08);
+    --muted: #b3b3b3;
+  }
+
+  /* Light Mode */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #ffffff;
+      --bg-2: #f8f8f8;
+      --bg-3: #f0f0f0;
+      --text: #1a1a1a;
+      --text-muted: #666666;
+      --border: rgba(0,0,0,0.08);
+      --gradient-accent: rgba(0, 123, 255, 0.1);
+      --gradient-accent-light: rgba(0, 123, 255, 0.04);
+      --dark-2: #f8f8f8;
+      --dark-3: #f0f0f0;
+      --muted: #666666;
+    }
+  }
+
+  /* Explicit Light Mode */
+  :root[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-2: #f8f8f8;
+    --bg-3: #f0f0f0;
+    --text: #1a1a1a;
+    --text-muted: #666666;
+    --border: rgba(0,0,0,0.08);
+    --gradient-accent: rgba(0, 123, 255, 0.1);
+    --gradient-accent-light: rgba(0, 123, 255, 0.04);
+    --dark-2: #f8f8f8;
+    --dark-3: #f0f0f0;
+    --muted: #666666;
+  }
+
+  /* Explicit Dark Mode */
+  :root[data-theme="dark"] {
+    --bg: #0d0d0d;
+    --bg-2: #161616;
+    --bg-3: #222;
+    --text: #ffffff;
+    --text-muted: #b3b3b3;
+    --gradient-accent: rgba(0, 123, 255, 0.08);
+    --gradient-accent-light: rgba(0, 123, 255, 0.03);
+    --dark-2: #161616;
+    --dark-3: #222;
+    --muted: #b3b3b3;
   }
 
   html { scroll-behavior: smooth; }
 
+  /* Light mode adjustments */
+  :root[data-theme="light"] select,
+  :root[data-theme="light"] .custom-dropdown-trigger,
+  :root[data-theme="light"] .form-group input,
+  :root[data-theme="light"] .form-group select,
+  :root[data-theme="light"] .country-search {
+    background: #f0f0f0 !important;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) select,
+    :root:not([data-theme="dark"]) .custom-dropdown-trigger,
+    :root:not([data-theme="dark"]) .form-group input,
+    :root:not([data-theme="dark"]) .form-group select,
+    :root:not([data-theme="dark"]) .country-search {
+      background: #f0f0f0 !important;
+    }
+  }
+
   body {
-    background: var(--dark);
-    color: #fff;
+    background: var(--bg);
+    color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: direction 0.3s ease, background 0.3s ease, color 0.3s ease;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--gradient-x, 50%) var(--gradient-y, 50%), var(--gradient-accent) 0%, var(--gradient-accent-light) 25%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.5s cubic-bezier(0.33, 0.66, 0.66, 1);
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  body.rtl {
+    direction: rtl;
+  }
+
+  /* Arabic Font Support */
+  body.rtl .nav-logo,
+  body.rtl h1,
+  body.rtl h2,
+  body.rtl h3,
+  body.rtl .hero-eyebrow,
+  body.rtl .section-label,
+  body.rtl .section-title,
+  body.rtl .about-desc,
+  body.rtl .tech-card h3,
+  body.rtl .tech-card-title,
+  body.rtl .footer-year {
+    font-family: 'Cairo', 'Amiri', 'Cormorant Garamond', serif;
+    font-weight: 600;
   }
 
   /* NAV */
@@ -35,7 +151,8 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.25rem 3rem;
-    background: rgba(13,13,13,0.85);
+    background: var(--bg);
+    opacity: 0.98;
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
@@ -45,18 +162,24 @@
     font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    color: #fff;
+    color: var(--text);
     text-decoration: none;
   }
 
   .nav-logo span { color: var(--gold); }
 
-  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: nowrap; }
+  .nav-right > * { min-width: 0; }
+
+  .nav-right .nav-dropdown {
+    margin: 0;
+    min-width: 0;
+  }
 
   select {
-    background: rgba(255,255,255,0.04);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border);
-    color: #fff;
+    color: var(--text);
     padding: 0.75rem 1rem;
     border-radius: 2px;
     font-family: 'DM Sans', sans-serif;
@@ -70,7 +193,7 @@
     background-repeat: no-repeat;
   }
 
-  select option { background: var(--dark-2); color: #fff; }
+  select option { background: var(--bg-2); color: var(--text); }
 
   .btn {
     display: inline-block;
@@ -86,15 +209,15 @@
   }
 
   .btn-light {
-    background: #fff;
-    color: var(--dark);
+    background: var(--text);
+    color: var(--bg);
   }
 
   .btn-light:hover { background: var(--gold-light); }
 
   .btn-outline {
     background: transparent;
-    color: #fff;
+    color: var(--text);
     border: 1px solid rgba(255,255,255,0.3);
   }
 
@@ -255,7 +378,7 @@
   .why-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
 
   .why-image {
-    background: var(--dark-2);
+    background: var(--bg-2);
     border: 1px solid var(--border);
     border-radius: 2px;
     aspect-ratio: 4/3;
@@ -280,7 +403,7 @@
 
   /* STATS */
   .stats {
-    background: var(--dark-2);
+    background: var(--bg-2);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 3rem 2rem;
@@ -316,7 +439,7 @@
   }
 
   .ba-card {
-    background: var(--dark-2);
+    background: var(--bg-2);
     border: 1px solid var(--border);
     border-radius: 2px;
     aspect-ratio: 3/4;
@@ -354,7 +477,7 @@
   .booking-inner {
     max-width: 640px;
     margin: 3rem auto 0;
-    background: var(--dark-2);
+    background: var(--bg-2);
     border: 1px solid var(--border);
     border-radius: 2px;
     padding: 2.5rem;
@@ -409,8 +532,8 @@
     gap: 0.5rem;
     border: 1px solid var(--border);
     border-radius: 2px;
-    background: rgba(255,255,255,0.04);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
     padding: 0.75rem 0.9rem;
     cursor: pointer;
     text-align: left;
@@ -420,9 +543,100 @@
     border-color: rgba(0,123,255,0.5);
   }
 
-  .dropdown-arrow {
-    color: var(--gold);
-    font-size: 0.9rem;
+  .nav-dropdown {
+    width: 46px;
+    min-width: 46px;
+  }
+
+  .nav-right .nav-dropdown {
+    min-width: 46px;
+  }
+
+  .nav-dropdown .custom-dropdown-trigger {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+  }
+
+  .nav-dropdown .custom-dropdown-trigger .dropdown-value {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .nav-dropdown .custom-dropdown-trigger .dropdown-arrow {
+    display: none;
+  }
+
+  .nav-icon,
+  .flaticon,
+  .icon {
+    color: var(--text);
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-icon svg,
+  .flaticon svg,
+  .icon svg {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+
+  .language-icon::before,
+  .theme-icon::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(0);
+  }
+
+  :root[data-theme="dark"] .language-icon::before,
+  :root[data-theme="dark"] .theme-icon::before {
+    filter: brightness(0) invert(1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .language-icon::before,
+    :root:not([data-theme="light"]) .theme-icon::before {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .language-icon::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/%3E%3C/svg%3E");
+  }
+
+  .theme-icon::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5'/%3E%3Cline x1='12' y1='1' x2='12' y2='3'/%3E%3Cline x1='12' y1='21' x2='12' y2='23'/%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'/%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'/%3E%3Cline x1='1' y1='12' x2='3' y2='12'/%3E%3Cline x1='21' y1='12' x2='23' y2='12'/%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'/%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'/%3E%3C/svg%3E");
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .custom-options {
@@ -432,7 +646,7 @@
     right: 0;
     max-height: 320px;
     overflow: hidden;
-    background: var(--dark-2);
+    background: var(--bg-2);
     border: 1px solid var(--border);
     border-radius: 4px;
     box-shadow: 0 18px 40px rgba(0,0,0,0.35);
@@ -441,6 +655,13 @@
     transform: translateY(-8px);
     transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
     z-index: 10;
+  }
+
+  .nav-dropdown .custom-options {
+    left: auto;
+    right: 0;
+    min-width: 180px;
+    width: auto;
   }
 
   .custom-options.open {
@@ -459,7 +680,7 @@
     background: rgba(255,255,255,0.05);
     border: 1px solid var(--border);
     border-radius: 2px;
-    color: #fff;
+    color: var(--text);
     padding: 0.55rem 0.75rem;
     font-family: 'DM Sans', sans-serif;
     font-size: 0.9rem;
@@ -478,7 +699,7 @@
   .custom-option {
     padding: 0.75rem 0.9rem;
     cursor: pointer;
-    color: #fff;
+    color: var(--text);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -518,7 +739,7 @@
     background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
     border-radius: 2px;
-    color: #fff;
+    color: var(--text);
     padding: 0.7rem 0.9rem;
     font-family: 'DM Sans', sans-serif;
     font-size: 0.9rem;
@@ -567,7 +788,7 @@
   }
 
   .tech-item {
-    background: var(--dark-2);
+    background: var(--bg-2);
     border: 1px solid var(--border);
     border-radius: 2px;
     padding: 2rem;
@@ -590,6 +811,266 @@
     line-height: 1.6;
   }
 
+  /* REVIEWS SECTION */
+  .reviews-scroll {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: 3rem;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .reviews-scroll:hover .reviews-track {
+    animation-play-state: paused;
+  }
+
+  .reviews-track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.5rem;
+    width: max-content;
+    animation: scrollReviews 40s linear infinite;
+  }
+
+  @keyframes scrollReviews {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .review-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-width: 320px;
+    max-width: 320px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .review-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(0,123,255,0.3);
+    box-shadow: 0 12px 40px rgba(0,123,255,0.1);
+  }
+
+  .review-stars {
+    color: var(--gold);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .review-stars img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) saturate(100%) invert(31%) sepia(98%) saturate(1234%) hue-rotate(195deg) brightness(100%) contrast(101%);
+  }
+
+  .review-text {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-style: italic;
+    flex-grow: 1;
+  }
+
+  .review-translated-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--bg-3);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: auto;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border);
+    font-style: normal;
+    align-self: flex-start;
+  }
+
+  .review-author {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .review-date {
+    color: #666;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  /* INSTAGRAM SECTION */
+  .instagram-scroll {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: 3rem;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .instagram-scroll:hover .instagram-track {
+    animation-play-state: paused;
+  }
+
+  .instagram-track {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    width: max-content;
+    animation: scrollInstagram 35s linear infinite;
+  }
+
+  @keyframes scrollInstagram {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .instagram-item {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .instagram-item:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(0,123,255,0.3);
+    box-shadow: 0 12px 40px rgba(0,123,255,0.1);
+  }
+
+  .instagram-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .instagram-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .instagram-follow-btn {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    border-radius: 8px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .instagram-follow-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(0,123,255,0.3);
+    box-shadow: 0 12px 40px rgba(0,123,255,0.1);
+  }
+
+  .instagram-follow-btn svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    stroke: var(--gold);
+  }
+
+  .instagram-follow-btn span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .instagram-reel-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  /* SUBTLE SINGLE BLOB BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse 50vw 40vh at var(--blob-x, 50%) var(--blob-y, 50%), 
+        rgba(0, 123, 255, calc(0.06 * var(--blob-opacity, 1))) 0%, 
+        rgba(0, 123, 255, calc(0.02 * var(--blob-opacity, 1))) 40%, 
+        transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px);
+    transition: opacity 0.3s ease;
+  }
+
+  /* POP-OUT ANIMATIONS - UNIFORM ACROSS ALL ELEMENTS */
+  .pop-out {
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .pop-out.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Uniform hover effect for ALL pop-out elements */
+  .pop-out.visible:hover {
+    transform: translateY(-8px) scale(1.03);
+    transition: transform 0.3s ease;
+  }
+
+  /* Instagram items get the same treatment */
+  .instagram-item.pop-out.visible:hover,
+  .instagram-follow-btn.pop-out.visible:hover {
+    transform: translateY(-8px) scale(1.03);
+  }
+
+  /* Review cards - ensure consistent hover */
+  .review-card.pop-out.visible:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(0,123,255,0.3);
+    box-shadow: 0 12px 40px rgba(0,123,255,0.1);
+  }
+
+  .ba-card.pop-out.visible:hover .ba-num {
+    color: var(--gold);
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.25rem; }
@@ -600,6 +1081,8 @@
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     .phone-input-wrapper { flex-direction: column; }
     .custom-dropdown { width: 100%; max-width: none; }
+    .review-card { min-width: 280px; max-width: 280px; }
+    .instagram-item, .instagram-follow-btn { width: 240px; height: 240px; }
   }
 </style>
 </head>
@@ -608,27 +1091,37 @@
 <nav>
   <a href="#" class="nav-logo">Hair <span>Istanbul</span></a>
   <div class="nav-right">
-    <div class="custom-dropdown" id="languageDropdown">
-      <button type="button" class="custom-dropdown-trigger" id="languageDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
+    <div class="custom-dropdown nav-dropdown" id="languageDropdown">
+      <button type="button" class="custom-dropdown-trigger" id="languageDropdownToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Language selector">
+        <span class="nav-icon language-icon" aria-hidden="true"></span>
         <span class="dropdown-value">EN</span>
-        <span class="dropdown-arrow">▾</span>
       </button>
       <div class="custom-options" id="languageOptions" role="listbox" tabindex="-1">
         <div class="options-list" id="languageOptionsList"></div>
       </div>
       <input type="hidden" id="language" value="EN">
     </div>
-    <a href="#booking" class="btn btn-light">Book Now</a>
+    <div class="custom-dropdown nav-dropdown" id="themeDropdown">
+      <button type="button" class="custom-dropdown-trigger" id="themeDropdownToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Theme selector">
+        <span class="nav-icon theme-icon" aria-hidden="true"></span>
+        <span class="dropdown-value">System</span>
+      </button>
+      <div class="custom-options" id="themeOptions" role="listbox" tabindex="-1">
+        <div class="options-list" id="themeOptionsList"></div>
+      </div>
+      <input type="hidden" id="theme" value="system">
+    </div>
+    <a href="#booking" class="btn btn-light" data-i18n="nav.bookNow">Book Now</a>
   </div>
 </nav>
 
 <section class="hero">
-  <p class="hero-eyebrow">Turkish team, Morocco based.</p>
-  <h1>Premium Hair Transplant<br>in <em>Morocco</em></h1>
-  <p>A fully Turkish professional team delivering world-class results for international patients.</p>
+  <p class="hero-eyebrow" data-i18n="hero.eyebrow">Turkish team, Morocco based.</p>
+  <h1 data-i18n="hero.title">Premium Hair Transplant<br>in <em>Morocco</em></h1>
+  <p data-i18n="hero.subtitle">A fully Turkish professional team delivering world-class results for our patients.</p>
   <div class="hero-cta">
-    <a href="#booking" class="btn btn-gold">Get Consultation</a>
-    <a href="#about" class="btn btn-outline">Learn More</a>
+    <a href="#booking" class="btn btn-gold" data-i18n="hero.getConsultation">Get Consultation</a>
+    <a href="#about" class="btn btn-outline" data-i18n="hero.learnMore">Learn More</a>
   </div>
   <div class="hero-line"></div>
 </section>
@@ -636,16 +1129,16 @@
 <div class="stats">
   <div class="stats-grid">
     <div>
-      <span class="stat-num">3,000+</span>
-      <span class="stat-label">Successful Procedures</span>
+      <span class="stat-num">7,000+</span>
+      <span class="stat-label" data-i18n="stats.procedures">Successful Procedures</span>
     </div>
     <div>
       <span class="stat-num">98%</span>
-      <span class="stat-label">Patient Satisfaction</span>
+      <span class="stat-label" data-i18n="stats.satisfaction">Patient Satisfaction</span>
     </div>
     <div>
       <span class="stat-num">9+</span>
-      <span class="stat-label">Years of Experience</span>
+      <span class="stat-label" data-i18n="stats.experience">Years of Experience</span>
     </div>
   </div>
 </div>
@@ -654,14 +1147,14 @@
   <div class="container">
     <div class="why-grid">
       <div class="why-text">
-        <p class="section-label">Why Hair Istanbul</p>
-        <h2>Precision, Artistry, and Care</h2>
-        <p>Our clinic is powered by an experienced Turkish medical team specializing in modern hair transplant techniques. We combine precision with artistry to ensure natural-looking results tailored to each patient.</p>
-        <p>From your first consultation to your final follow-up, our team is with you at every step — guiding you through a seamless, fully supported experience in Istanbul.</p>
-        <a href="#booking" class="btn btn-outline" style="margin-top:0.5rem">Schedule a Call</a>
+        <p class="section-label" data-i18n="about.sectionLabel">Why Hair Istanbul</p>
+        <h2 data-i18n="about.title">Precision, Artistry, and Care</h2>
+        <p data-i18n="about.description1">Our clinic is powered by an experienced Turkish medical team specializing in modern hair transplant techniques. We combine precision with artistry to ensure natural-looking results tailored to each patient.</p>
+        <p data-i18n="about.description2">From your first consultation to your final follow-up, our team is with you at every step — guiding you through a seamless, fully supported experience in Morocco.</p>
+        <a href="#booking" class="btn btn-outline" style="margin-top:0.5rem" data-i18n="about.scheduleCall">Schedule a Call</a>
       </div>
-      <div class="why-image">
-        <span>Clinic Photo</span>
+      <div class="why-image pop-out">
+        <span data-i18n="about.clinicPhoto">Clinic Photo</span>
       </div>
     </div>
   </div>
@@ -669,20 +1162,20 @@
 
 <section id="technology">
   <div class="container">
-    <p class="section-label">Technology</p>
-    <h2>Advanced Hair Transplant Techniques</h2>
+    <p class="section-label" data-i18n="tech.sectionLabel">Technology</p>
+    <h2 data-i18n="tech.title">Advanced Hair Transplant Techniques</h2>
     <div class="tech-grid">
-      <div class="tech-item">
-        <h3>Safir Technique</h3>
-        <p>Utilizing the latest Sapphire FUE method for precise, minimally invasive hair follicle extraction, ensuring maximum graft survival and natural results.</p>
+      <div class="tech-item pop-out">
+        <h3 data-i18n="tech.safir.title">Safir Technique</h3>
+        <p data-i18n="tech.safir.description">Utilizing the latest Sapphire FUE method for precise, minimally invasive hair follicle extraction, ensuring maximum graft survival and natural results.</p>
       </div>
-      <div class="tech-item">
-        <h3>Fully Professional Turkish Team</h3>
-        <p>Our expert Turkish medical professionals bring years of specialized experience in hair restoration, combining traditional techniques with modern innovations.</p>
+      <div class="tech-item pop-out">
+        <h3 data-i18n="tech.team.title">Fully Professional Turkish Team</h3>
+        <p data-i18n="tech.team.description">Our expert Turkish medical professionals bring years of specialized experience in hair restoration, combining traditional techniques with modern innovations.</p>
       </div>
-      <div class="tech-item">
-        <h3>Painless Local Anesthesia</h3>
-        <p>Advanced sedation and local anesthesia techniques ensure a comfortable, pain-free procedure from start to finish, prioritizing patient comfort.</p>
+      <div class="tech-item pop-out">
+        <h3 data-i18n="tech.anesthesia.title">Painless Local Anesthesia</h3>
+        <p data-i18n="tech.anesthesia.description">Advanced sedation and local anesthesia techniques ensure a comfortable, pain-free procedure from start to finish, prioritizing patient comfort.</p>
       </div>
     </div>
   </div>
@@ -690,20 +1183,44 @@
 
 <section id="results" style="padding-top:0;">
   <div class="container">
-    <p class="section-label">Gallery</p>
-    <h2>Before &amp; After Results</h2>
+    <p class="section-label" data-i18n="results.sectionLabel">Gallery</p>
+    <h2 data-i18n="results.title">Before &amp; After Results</h2>
     <div class="ba-grid">
-      <div class="ba-card">
+      <div class="ba-card pop-out">
         <span class="ba-num">01</span>
-        <span>Before / After</span>
+        <span data-i18n="results.beforeAfter">Before / After</span>
       </div>
-      <div class="ba-card">
+      <div class="ba-card pop-out">
         <span class="ba-num">02</span>
-        <span>Before / After</span>
+        <span data-i18n="results.beforeAfter">Before / After</span>
       </div>
-      <div class="ba-card">
+      <div class="ba-card pop-out">
         <span class="ba-num">03</span>
-        <span>Before / After</span>
+        <span data-i18n="results.beforeAfter">Before / After</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="container">
+    <p class="section-label" data-i18n="reviews.sectionLabel">Testimonials</p>
+    <h2 data-i18n="reviews.title">What Our Patients Say</h2>
+    <div class="reviews-scroll">
+      <div class="reviews-track" id="reviewsTrack">
+        <!-- Reviews will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="instagram">
+  <div class="container">
+    <p class="section-label" data-i18n="instagram.sectionLabel">Follow Us</p>
+    <h2 data-i18n="instagram.title">@hair_instanbul</h2>
+    <div class="instagram-scroll">
+      <div class="instagram-track" id="instagramTrack">
+        <!-- Instagram posts will be populated by JavaScript -->
       </div>
     </div>
   </div>
@@ -711,58 +1228,43 @@
 
 <section id="booking">
   <div class="container" style="text-align:center;">
-    <p class="section-label">Appointments</p>
-    <h2>Book Your Consultation</h2>
-    <p style="color:var(--muted); max-width:400px; margin: 0 auto;">Fill in your details and our team will reach out within 24 hours.</p>
+    <p class="section-label" data-i18n="booking.sectionLabel">Appointments</p>
+    <h2 data-i18n="booking.title">Book Your Consultation</h2>
+    <p style="color:var(--muted); max-width:400px; margin: 0 auto;" data-i18n="booking.subtitle">Fill in your details and our team will reach out within 3 hours.</p>
     <div class="booking-inner">
       <div class="booking-grid">
         <div class="form-row">
           <div class="form-group">
-            <label for="name">Full Name</label>
-            <input id="name" type="text" placeholder="e.g. John Smith" required>
+            <label for="name" data-i18n="form.nameLabel">Full Name</label>
+            <input id="name" type="text" data-i18n-placeholder="form.namePlaceholder" placeholder="e.g. John Smith" required>
           </div>
           <div class="form-group">
-            <label for="age">Age</label>
-            <input id="age" type="number" min="19" placeholder="18+" required>
+            <label for="age" data-i18n="form.ageLabel">Age</label>
+            <input id="age" type="number" min="19" data-i18n-placeholder="form.agePlaceholder" placeholder="18+" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="city">City</label>
-          <input id="city" type="text" placeholder="e.g. Casablanca" required>
+          <label for="city" data-i18n="form.cityLabel">City</label>
+          <input id="city" type="text" data-i18n-placeholder="form.cityPlaceholder" placeholder="e.g. Casablanca" required>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="service">Type of Service</label>
-            <div class="custom-dropdown" id="serviceDropdown">
-              <button type="button" class="custom-dropdown-trigger" id="serviceDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
-                <span class="dropdown-value">Select a service</span>
-                <span class="dropdown-arrow">▾</span>
-              </button>
-              <div class="custom-options" id="serviceOptions" role="listbox" tabindex="-1">
-                <div class="options-list" id="serviceOptionsList"></div>
-              </div>
-              <input type="hidden" id="service" value="">
+        <div class="form-group">
+          <label for="procedure" data-i18n="form.procedureLabel">Service type</label>
+          <div class="custom-dropdown" id="procedureDropdown">
+            <button type="button" class="custom-dropdown-trigger" id="procedureDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
+              <span class="dropdown-value" data-i18n="form.procedurePlaceholder">Select an option</span>
+              <span class="dropdown-arrow">▾</span>
+            </button>
+            <div class="custom-options" id="procedureOptions" role="listbox" tabindex="-1">
+              <div class="options-list" id="procedureOptionsList"></div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="procedure">Hair Transplant / Treatment Type</label>
-            <div class="custom-dropdown" id="procedureDropdown">
-              <button type="button" class="custom-dropdown-trigger" id="procedureDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
-                <span class="dropdown-value">Select an option</span>
-                <span class="dropdown-arrow">▾</span>
-              </button>
-              <div class="custom-options" id="procedureOptions" role="listbox" tabindex="-1">
-                <div class="options-list" id="procedureOptionsList"></div>
-              </div>
-              <input type="hidden" id="procedure" value="">
-            </div>
+            <input type="hidden" id="procedure" value="">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="phone">Phone Number</label>
+          <label for="phone" data-i18n="form.phoneLabel">Phone Number</label>
           <div class="phone-input-wrapper">
             <div class="custom-dropdown" id="countryDropdown">
               <button type="button" class="custom-dropdown-trigger" id="countryDropdownToggle" aria-haspopup="listbox" aria-expanded="false">
@@ -771,28 +1273,28 @@
               </button>
               <div class="custom-options" id="countryOptions" role="listbox" tabindex="-1">
                 <div class="country-search">
-                  <input id="countrySearch" type="search" placeholder="Search code" aria-label="Search country code">
+                  <input id="countrySearch" type="search" data-i18n-placeholder="form.countrySearchPlaceholder" placeholder="Search code" aria-label="Search country code">
                 </div>
                 <div class="options-list" id="countryOptionsList"></div>
               </div>
               <input type="hidden" id="countryCode" value="212">
             </div>
-            <input id="phone" type="tel" placeholder="6 00 00 00 00" required>
+            <input id="phone" type="tel" data-i18n-placeholder="form.phonePlaceholder" placeholder="6 00 00 00 00" required>
           </div>
         </div>
 
         <button id="whatsappBtn" class="btn btn-gold form-submit" disabled>
-          <span class="btn-text">Complete the form to chat</span>
+          <span class="btn-text" data-i18n="form.submitButton">Complete the form to chat</span>
         </button>
-        <p id="formNote" class="form-note">Please complete all fields. Users under 18 cannot continue.</p>
+        <p id="formNote" class="form-note" data-i18n="form.note">Please complete all fields.</p>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Hair Istanbul. All rights reserved.</span>
-  <span>Casablanca, Morocco</span>
+  <span data-i18n="footer.copyright">© 2026 Hair Istanbul. All rights reserved.</span>
+  <span data-i18n="footer.location">Casablanca, Morocco</span>
 </footer>
 
 <script>
@@ -801,17 +1303,435 @@ const whatsappBtn = document.getElementById('whatsappBtn');
 const whatsappBtnText = whatsappBtn.querySelector('.btn-text');
 const countryDropdown = document.getElementById('countryDropdown');
 const countryDropdownToggle = document.getElementById('countryDropdownToggle');
+
+// Translation data
+const translations = {
+  en: {
+    nav: {
+      bookNow: "Book Now"
+    },
+    hero: {
+      eyebrow: "Turkish team, Morocco based.",
+      title: "Premium Hair Transplant<br>in <em>Morocco</em>",
+      subtitle: "A fully Turkish professional team delivering world-class results for our patients.",
+      getConsultation: "Get Consultation",
+      learnMore: "Learn More"
+    },
+    stats: {
+      procedures: "Successful Procedures",
+      satisfaction: "Patient Satisfaction",
+      experience: "Years of Experience"
+    },
+    about: {
+      sectionLabel: "Why Hair Istanbul",
+      title: "Precision, Artistry, and Care",
+      description1: "Our clinic is powered by an experienced Turkish medical team specializing in modern hair transplant techniques. We combine precision with artistry to ensure natural-looking results tailored to each patient.",
+      description2: "From your first consultation to your final follow-up, our team is with you at every step — guiding you through a seamless, fully supported experience in Morocco.",
+      scheduleCall: "Schedule a Call",
+      clinicPhoto: "Clinic Photo"
+    },
+    tech: {
+      sectionLabel: "Technology",
+      title: "Advanced Hair Transplant Techniques",
+      safir: {
+        title: "Safir Technique",
+        description: "Utilizing the latest Sapphire FUE method for precise, minimally invasive hair follicle extraction, ensuring maximum graft survival and natural results."
+      },
+      team: {
+        title: "Fully Professional Turkish Team",
+        description: "Our expert Turkish medical professionals bring years of specialized experience in hair restoration, combining traditional techniques with modern innovations."
+      },
+      anesthesia: {
+        title: "Painless Local Anesthesia",
+        description: "Advanced sedation and local anesthesia techniques ensure a comfortable, pain-free procedure from start to finish, prioritizing patient comfort."
+      }
+    },
+    results: {
+      sectionLabel: "Gallery",
+      title: "Before & After Results",
+      beforeAfter: "Before / After"
+    },
+    reviews: {
+      sectionLabel: "Testimonials",
+      title: "What Our Patients Say",
+      translatedFrom: "Translated from"
+    },
+    instagram: {
+      sectionLabel: "Follow Us",
+      title: "@hair_instanbul",
+      followUs: "Follow on Instagram"
+    },
+    booking: {
+      sectionLabel: "Appointments",
+      title: "Book Your Consultation",
+      subtitle: "Fill in your details and our team will reach out within 3 hours."
+    },
+    form: {
+      nameLabel: "Full Name",
+      namePlaceholder: "e.g. John Smith",
+      ageLabel: "Age",
+      agePlaceholder: "18+",
+      cityLabel: "City",
+      cityPlaceholder: "e.g. Casablanca",
+      procedureLabel: "Service type",
+      procedurePlaceholder: "Select an option",
+      phoneLabel: "Phone Number",
+      phonePlaceholder: "6 00 00 00 00",
+      countrySearchPlaceholder: "Search code",
+      submitButton: "Complete the form to chat",
+      note: "Please complete all fields.",
+      nameValidation: "Please enter your full name with at least first and last name.",
+      nameError: "Enter a valid name",
+      ageError: "You must be 19 or older to continue.",
+      ageErrorButton: "Age requirement not met",
+      readyMessage: "All set — click to chat on WhatsApp.",
+      readyButton: "Chat on WhatsApp"
+    },
+    footer: {
+      copyright: "© 2026 Hair Istanbul. All rights reserved.",
+      location: "Casablanca, Morocco"
+    }
+  },
+  ar: {
+    nav: {
+      bookNow: "احجز الآن"
+    },
+    hero: {
+      eyebrow: "فريق تركي، مقره المغرب.",
+      title: "زراعة الشعر المتميزة<br>في <em>المغرب</em>",
+      subtitle: "فريق تركي محترف بالكامل يقدم نتائج عالمية المستوى لمرضانا.",
+      getConsultation: "احصل على استشارة",
+      learnMore: "اعرف المزيد"
+    },
+    stats: {
+      procedures: "إجراءات ناجحة",
+      satisfaction: "رضا المرضى",
+      experience: "سنوات الخبرة"
+    },
+    about: {
+      sectionLabel: "لماذا هير إسطنبول",
+      title: "الدقة، الفن، والرعاية",
+      description1: "عيادتنا مدعومة بفريق طبي تركي ذو خبرة متخصص في تقنيات زراعة الشعر الحديثة. نحن نجمع بين الدقة والفن لضمان نتائج طبيعية المظهر مصممة لكل مريض.",
+      description2: "من استشارتك الأولى إلى متابعتك النهائية، فريقنا معك في كل خطوة - يرشدك من خلال تجربة سلسة ومدعومة بالكامل في المغرب.",
+      scheduleCall: "جدولة مكالمة",
+      clinicPhoto: "صورة العيادة"
+    },
+    tech: {
+      sectionLabel: "التكنولوجيا",
+      title: "تقنيات زراعة الشعر المتقدمة",
+      safir: {
+        title: "تقنية السفير",
+        description: "استخدام طريقة FUE السفير الأحدث لاستخراج بصيلات الشعر الدقيقة والأقل تدخلاً جراحياً، مما يضمن بقاء الحويصلات الأقصى والنتائج الطبيعية."
+      },
+      team: {
+        title: "فريق تركي محترف بالكامل",
+        description: "أطباؤنا الأتراك الخبراء يجلبون سنوات من الخبرة المتخصصة في استعادة الشعر، مجمعين بين التقنيات التقليدية والابتكارات الحديثة."
+      },
+      anesthesia: {
+        title: "تخدير موضعي بدون ألم",
+        description: "تقنيات التخدير الموضعي والتخدير المتقدمة تضمن إجراء مريح وخالي من الألم من البداية إلى النهاية، مع الأولوية لراحة المريض."
+      }
+    },
+    results: {
+      sectionLabel: "المعرض",
+      title: "نتائج قبل وبعد",
+      beforeAfter: "قبل / بعد"
+    },
+    reviews: {
+      sectionLabel: "آراء العملاء",
+      title: "ماذا يقول مرضانا",
+      translatedFrom: "مترجم من"
+    },
+    instagram: {
+      sectionLabel: "تابعنا",
+      title: "@hair_instanbul",
+      followUs: "تابعنا على إنستغرام"
+    },
+    booking: {
+      sectionLabel: "المواعيد",
+      title: "احجز استشارتك",
+      subtitle: "املأ تفاصيلك وفريقنا سيتصل بك خلال 3 ساعات."
+    },
+    form: {
+      nameLabel: "الاسم الكامل",
+      namePlaceholder: "مثال: جون سميث",
+      ageLabel: "العمر",
+      agePlaceholder: "18+",
+      cityLabel: "المدينة",
+      cityPlaceholder: "مثال: الدار البيضاء",
+      procedureLabel: "نوع الخدمة",
+      procedurePlaceholder: "اختر خياراً",
+      phoneLabel: "رقم الهاتف",
+      phonePlaceholder: "6 00 00 00 00",
+      countrySearchPlaceholder: "البحث عن الرمز",
+      submitButton: "أكمل النموذج للدردشة",
+      note: "يرجى إكمال جميع الحقول",
+      nameValidation: "يرجى إدخال اسمك الكامل مع الاسم الأول والأخير على الأقل.",
+      nameError: "أدخل اسماً صحيحاً",
+      ageError: "يجب أن يكون عمرك 19 عاماً أو أكثر للمتابعة.",
+      ageErrorButton: "متطلبات العمر غير مستوفاة",
+      readyMessage: "كل شيء جاهز - انقر للدردشة على واتساب.",
+      readyButton: "الدردشة على واتساب"
+    },
+    footer: {
+      copyright: "© 2026 هير إسطنبول. جميع الحقوق محفوظة.",
+      location: "الدار البيضاء، المغرب"
+    }
+  },
+  fr: {
+    nav: {
+      bookNow: "Réserver maintenant"
+    },
+    hero: {
+      eyebrow: "Équipe turque, basée au Maroc.",
+      title: "Greffe de cheveux premium<br>au <em>Maroc</em>",
+      subtitle: "Une équipe professionnelle turque complète offrant des résultats de classe mondiale pour nos patients.",
+      getConsultation: "Obtenir une consultation",
+      learnMore: "En savoir plus"
+    },
+    stats: {
+      procedures: "Procédures réussies",
+      satisfaction: "Satisfaction des patients",
+      experience: "Années d'expérience"
+    },
+    about: {
+      sectionLabel: "Pourquoi Hair Istanbul",
+      title: "Précision, Art et Soins",
+      description1: "Notre clinique est alimentée par une équipe médicale turque expérimentée spécialisée dans les techniques modernes de greffe de cheveux. Nous combinons précision et art pour assurer des résultats naturels adaptés à chaque patient.",
+      description2: "De votre première consultation à votre suivi final, notre équipe est avec vous à chaque étape - vous guidant à travers une expérience transparente et entièrement prise en charge au Maroc.",
+      scheduleCall: "Planifier un appel",
+      clinicPhoto: "Photo de la clinique"
+    },
+    tech: {
+      sectionLabel: "Technologie",
+      title: "Techniques avancées de greffe de cheveux",
+      safir: {
+        title: "Technique Safir",
+        description: "Utilisation de la dernière méthode FUE au saphir pour l'extraction précise et minimale invasive des follicules pileux, assurant une survie maximale des greffons et des résultats naturels."
+      },
+      team: {
+        title: "Équipe turque entièrement professionnelle",
+        description: "Nos professionnels médicaux turcs experts apportent des années d'expérience spécialisée en restauration capillaire, combinant des techniques traditionnelles avec des innovations modernes."
+      },
+      anesthesia: {
+        title: "Anesthésie locale indolore",
+        description: "Les techniques avancées de sédation et d'anesthésie locale assurent une procédure confortable et indolore du début à la fin, priorisant le confort du patient."
+      }
+    },
+    results: {
+      sectionLabel: "Galerie",
+      title: "Résultats avant et après",
+      beforeAfter: "Avant / Après"
+    },
+    reviews: {
+      sectionLabel: "Témoignages",
+      title: "Ce que disent nos patients",
+      translatedFrom: "Traduit de"
+    },
+    instagram: {
+      sectionLabel: "Suivez-nous",
+      title: "@hair_instanbul",
+      followUs: "Suivez-nous sur Instagram"
+    },
+    booking: {
+      sectionLabel: "Rendez-vous",
+      title: "Réservez votre consultation",
+      subtitle: "Remplissez vos coordonnées et notre équipe vous contactera dans les 3 heures."
+    },
+    form: {
+      nameLabel: "Nom complet",
+      namePlaceholder: "ex: John Smith",
+      ageLabel: "Âge",
+      agePlaceholder: "18+",
+      cityLabel: "Ville",
+      cityPlaceholder: "ex: Casablanca",
+      procedureLabel: "Type de service",
+      procedurePlaceholder: "Sélectionner une option",
+      phoneLabel: "Numéro de téléphone",
+      phonePlaceholder: "6 00 00 00 00",
+      countrySearchPlaceholder: "Rechercher le code",
+      submitButton: "Complétez le formulaire pour discuter",
+      note: "Veuillez remplir tous les champs.",
+      nameValidation: "Veuillez saisir votre nom complet avec au moins le prénom et le nom de famille.",
+      nameError: "Entrez un nom valide",
+      ageError: "Vous devez avoir 19 ans ou plus pour continuer.",
+      ageErrorButton: "Exigence d'âge non remplie",
+      readyMessage: "Tout est prêt - cliquez pour discuter sur WhatsApp.",
+      readyButton: "Discuter sur WhatsApp"
+    },
+    footer: {
+      copyright: "© 2026 Hair Istanbul. Tous droits réservés.",
+      location: "Casablanca, Maroc"
+    }
+  },
+  tr: {
+    nav: {
+      bookNow: "Şimdi Rezervasyon Yap"
+    },
+    hero: {
+      eyebrow: "Türk ekip, Fas merkezli.",
+      title: "Premium Saç Ekimi<br><em>Fas'ta</em>",
+      subtitle: "Hastalarımız için dünya standartlarında sonuçlar sunan, tamamen profesyonel bir Türk ekibi.",
+      getConsultation: "Danışmanlık Al",
+      learnMore: "Daha Fazla Bilgi"
+    },
+    stats: {
+      procedures: "Başarılı İşlemler",
+      satisfaction: "Hasta Memnuniyeti",
+      experience: "Deneyim Yılı"
+    },
+    about: {
+      sectionLabel: "Neden Hair Istanbul",
+      title: "Hassasiyet, Sanat ve Özen",
+      description1: "Klinikimiz, modern saç ekimi tekniklerinde uzman deneyimli bir Türk tıbbi ekibi tarafından desteklenmektedir. Her hastaya özel, doğal görünen sonuçlar için hassasiyeti ve sanatı birleştiriyoruz.",
+      description2: "İlk danışmanlığınızdan son takip randevunuza kadar ekibimiz her adımda yanınızdadır — Fas'ta sorunsuz ve tam destekli bir deneyim yaşamanızı sağlar.",
+      scheduleCall: "Bir Çağrı Planla",
+      clinicPhoto: "Klinik Fotoğrafı"
+    },
+    tech: {
+      sectionLabel: "Teknoloji",
+      title: "Gelişmiş Saç Ekimi Teknikleri",
+      safir: {
+        title: "Safir Tekniği",
+        description: "Maksimum greft hayatta kalımı ve doğal sonuçlar sağlamak için hassas, minimum invaziv saç folikülü ekstraksiyonu için en son Safir FUE yöntemini kullanıyoruz."
+      },
+      team: {
+        title: "Tam Profesyonel Türk Ekibi",
+        description: "Uzman Türk tıbbi profesyonellerimiz, geleneksel teknikleri modern yeniliklerle birleştirerek saç restorasyonunda yılların özel deneyimini sunar."
+      },
+      anesthesia: {
+        title: "Ağrısız Lokal Anestezi",
+        description: "Gelişmiş sedasyon ve lokal anestezi teknikleri, baştan sona konforlu, ağrısız bir işlem sağlar ve hasta konforunu ön planda tutar."
+      }
+    },
+    results: {
+      sectionLabel: "Galeri",
+      title: "Önce ve Sonra Sonuçları",
+      beforeAfter: "Önce / Sonra"
+    },
+    reviews: {
+      sectionLabel: "Yorumlar",
+      title: "Hastalarımız Ne Diyor",
+      translatedFrom: "Şu dilden çevrilmiştir"
+    },
+    instagram: {
+      sectionLabel: "Bizi Takip Edin",
+      title: "@hair_instanbul",
+      followUs: "Instagram'da Takip Et"
+    },
+    booking: {
+      sectionLabel: "Randevular",
+      title: "Danışmanlığınızı Ayırtın",
+      subtitle: "Bilgilerinizi doldurun, ekibimiz 3 saat içinde size ulaşacaktır."
+    },
+    form: {
+      nameLabel: "Ad Soyad",
+      namePlaceholder: "ör. John Smith",
+      ageLabel: "Yaş",
+      agePlaceholder: "18+",
+      cityLabel: "Şehir",
+      cityPlaceholder: "ör. Kazablanka",
+      procedureLabel: "Hizmet türü",
+      procedurePlaceholder: "Bir seçenek seçin",
+      phoneLabel: "Telefon Numarası",
+      phonePlaceholder: "6 00 00 00 00",
+      countrySearchPlaceholder: "Kod ara",
+      submitButton: "Sohbet için formu tamamlayın",
+      note: "Lütfen tüm alanları doldurun.",
+      nameValidation: "Lütfen en az adı ve soyadı içeren tam adınızı girin.",
+      nameError: "Geçerli bir isim girin",
+      ageError: "Devam etmek için 19 yaşında veya daha büyük olmalısınız.",
+      ageErrorButton: "Yaş koşulu sağlanmadı",
+      readyMessage: "Her şey hazır — WhatsApp'ta sohbet etmek için tıklayın.",
+      readyButton: "WhatsApp'ta Sohbet Et"
+    },
+    footer: {
+      copyright: "© 2026 Hair Istanbul. Tüm hakları saklıdır.",
+      location: "Kazablanka, Fas"
+    }
+  }
+};
+
+// Current language
+let currentLanguage = 'en';
+
+// Language switching function
+function setLanguage(lang) {
+  if (!translations[lang]) return;
+  
+  currentLanguage = lang;
+  document.documentElement.lang = lang;
+  
+  // Update HTML lang attribute
+  document.documentElement.setAttribute('lang', lang);
+  
+  // Add/remove RTL class for Arabic
+  if (lang === 'ar') {
+    document.body.classList.add('rtl');
+  } else {
+    document.body.classList.remove('rtl');
+  }
+  
+  // Update all elements with data-i18n attributes
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    const translation = getTranslation(key);
+    if (translation) {
+      if (element.tagName === 'INPUT' && element.hasAttribute('data-i18n-placeholder')) {
+        element.placeholder = translation;
+      } else {
+        element.innerHTML = translation;
+      }
+    }
+  });
+  
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const translation = getTranslation(key);
+    if (translation) {
+      element.placeholder = translation;
+    }
+  });
+  
+  // Update form validation messages
+  validateForm();
+  
+  // Refresh procedure dropdown for new language
+  renderProcedureOptions();
+  
+  // Refresh theme dropdown for new language
+  renderThemeOptions();
+  
+  // Clear procedure selection on language change to prevent mismatch
+  document.getElementById('procedure').value = '';
+  procedureValue.textContent = getTranslation('form.procedurePlaceholder');
+}
+
+// Get translation by key path
+function getTranslation(key) {
+  const keys = key.split('.');
+  let value = translations[currentLanguage];
+  
+  for (const k of keys) {
+    value = value?.[k];
+  }
+  
+  return value;
+}
+
+// Update language selector display
+function updateLanguageSelector(lang) {
+  const languageValue = languageDropdown.querySelector('.dropdown-value');
+  if (languageValue) {
+    languageValue.textContent = lang.toUpperCase();
+  }
+}
 const countryOptions = document.getElementById('countryOptions');
 const countryOptionsList = document.getElementById('countryOptionsList');
 const countrySearch = document.getElementById('countrySearch');
 const countryValue = countryDropdown.querySelector('.dropdown-value');
 
-// Service dropdown elements
-const serviceDropdown = document.getElementById('serviceDropdown');
-const serviceDropdownToggle = document.getElementById('serviceDropdownToggle');
-const serviceOptions = document.getElementById('serviceOptions');
-const serviceOptionsList = document.getElementById('serviceOptionsList');
-const serviceValue = serviceDropdown.querySelector('.dropdown-value');
 
 // Procedure dropdown elements
 const procedureDropdown = document.getElementById('procedureDropdown');
@@ -824,7 +1744,6 @@ const formFields = [
   document.getElementById('name'),
   document.getElementById('age'),
   document.getElementById('city'),
-  document.getElementById('service'),
   document.getElementById('procedure'),
   document.getElementById('phone'),
   document.getElementById('countryCode'),
@@ -1039,16 +1958,37 @@ const countryList = [
   { code: '998', emoji: '🇺🇿', label: 'Uzbekistan' },
 ];
 
-const serviceList = [
-  { value: 'Hair Transplant', label: 'Hair Transplant' },
-  { value: 'Treatment', label: 'Treatment' },
-];
+// Translated procedure lists for each language
+const procedureLists = {
+  en: [
+    { value: 'Hair transplant', label: 'Hair transplant' },
+    { value: 'Beard transplant', label: 'Beard transplant' },
+    { value: 'Eyebrows transplant', label: 'Eyebrows transplant' },
+    { value: 'Treatment', label: 'Treatment' },
+  ],
+  ar: [
+    { value: 'Hair transplant', label: 'زراعة الشعر' },
+    { value: 'Beard transplant', label: 'زراعة اللحية' },
+    { value: 'Eyebrows transplant', label: 'زراعة الحواجب' },
+    { value: 'Treatment', label: 'علاج' },
+  ],
+  fr: [
+    { value: 'Hair transplant', label: 'Greffe de cheveux' },
+    { value: 'Beard transplant', label: 'Greffe de barbe' },
+    { value: 'Eyebrows transplant', label: 'Greffe de sourcils' },
+    { value: 'Treatment', label: 'Traitement' },
+  ],
+  tr: [
+    { value: 'Hair transplant', label: 'Saç ekimi' },
+    { value: 'Beard transplant', label: 'Sakal ekimi' },
+    { value: 'Eyebrows transplant', label: 'Kaş ekimi' },
+    { value: 'Treatment', label: 'Tedavi' },
+  ],
+};
 
-const procedureList = [
-  { value: 'Hair', label: 'Hair' },
-  { value: 'Beard', label: 'Beard' },
-  { value: 'Eyebrows', label: 'Eyebrows' },
-];
+function getProcedureList() {
+  return procedureLists[currentLanguage] || procedureLists.en;
+}
 
 function renderCountryOptions(options = countryList) {
   countryOptionsList.innerHTML = options.map((country) => `
@@ -1106,6 +2046,7 @@ countryDropdownToggle.addEventListener('click', (event) => {
   if (countryOptions.classList.contains('open')) {
     closeCountryDropdown();
   } else {
+    closeAllDropdowns();
     openCountryDropdown();
   }
 });
@@ -1154,59 +2095,13 @@ countrySearch.addEventListener('keydown', (event) => {
   }
 });
 
-document.addEventListener('click', (event) => {
-  if (!countryDropdown.contains(event.target)) {
-    closeCountryDropdown();
-  }
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    closeCountryDropdown();
-  }
-});
-
 renderCountryOptions();
 setCountryValue('212', '🇲🇦', 'Morocco');
 
-// Service dropdown functions
-function renderServiceOptions() {
-  serviceOptionsList.innerHTML = serviceList.map((service) => `
-    <div class="custom-option" role="option" data-value="${service.value}" tabindex="0">
-      <span>${service.label}</span>
-    </div>
-  `).join('');
-}
-
-function closeServiceDropdown() {
-  serviceOptions.classList.remove('open');
-  serviceDropdownToggle.setAttribute('aria-expanded', 'false');
-}
-
-function openServiceDropdown() {
-  serviceOptions.classList.add('open');
-  serviceDropdownToggle.setAttribute('aria-expanded', 'true');
-}
-
-function setServiceValue(value, label) {
-  document.getElementById('service').value = value;
-  serviceValue.textContent = label;
-  serviceOptionsList.querySelectorAll('.custom-option').forEach((option) => {
-    option.setAttribute('aria-selected', option.dataset.value === value ? 'true' : 'false');
-  });
-}
-
-function selectServiceOption(option) {
-  const value = option.dataset.value;
-  const label = option.textContent.trim();
-  setServiceValue(value, label);
-  closeServiceDropdown();
-  validateForm();
-}
-
 // Procedure dropdown functions
 function renderProcedureOptions() {
-  procedureOptionsList.innerHTML = procedureList.map((procedure) => `
+  const list = getProcedureList();
+  procedureOptionsList.innerHTML = list.map((procedure) => `
     <div class="custom-option" role="option" data-value="${procedure.value}" tabindex="0">
       <span>${procedure.label}</span>
     </div>
@@ -1239,54 +2134,13 @@ function selectProcedureOption(option) {
   validateForm();
 }
 
-// Service dropdown event listeners
-serviceDropdownToggle.addEventListener('click', (event) => {
-  event.stopPropagation();
-  if (serviceOptions.classList.contains('open')) {
-    closeServiceDropdown();
-  } else {
-    openServiceDropdown();
-  }
-});
-
-serviceDropdownToggle.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    serviceDropdownToggle.click();
-  }
-});
-
-serviceOptionsList.addEventListener('click', (event) => {
-  const option = event.target.closest('.custom-option');
-  if (!option) return;
-  selectServiceOption(option);
-});
-
-serviceOptionsList.addEventListener('keydown', (event) => {
-  const current = document.activeElement;
-  if (!current.classList.contains('custom-option')) return;
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    selectServiceOption(current);
-  }
-  if (event.key === 'ArrowDown') {
-    event.preventDefault();
-    const next = current.nextElementSibling || serviceOptionsList.firstElementChild;
-    next.focus();
-  }
-  if (event.key === 'ArrowUp') {
-    event.preventDefault();
-    const prev = current.previousElementSibling || serviceOptionsList.lastElementChild;
-    prev.focus();
-  }
-});
-
 // Procedure dropdown event listeners
 procedureDropdownToggle.addEventListener('click', (event) => {
   event.stopPropagation();
   if (procedureOptions.classList.contains('open')) {
     closeProcedureDropdown();
   } else {
+    closeAllDropdowns();
     openProcedureDropdown();
   }
 });
@@ -1323,28 +2177,25 @@ procedureOptionsList.addEventListener('keydown', (event) => {
   }
 });
 
-// Close dropdowns when clicking outside
+function closeAllDropdowns() {
+  document.querySelectorAll('.custom-options.open').forEach((options) => {
+    options.classList.remove('open');
+    const toggle = options.closest('.custom-dropdown')?.querySelector('.custom-dropdown-trigger');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
 document.addEventListener('click', (event) => {
-  if (!serviceDropdown.contains(event.target)) {
-    closeServiceDropdown();
-  }
-  if (!procedureDropdown.contains(event.target)) {
-    closeProcedureDropdown();
-  }
-  if (!countryDropdown.contains(event.target)) {
-    closeCountryDropdown();
-  }
-  if (!languageDropdown.contains(event.target)) {
-    closeLanguageDropdown();
+  if (!event.target.closest('.custom-dropdown')) {
+    closeAllDropdowns();
   }
 });
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
-    closeServiceDropdown();
-    closeProcedureDropdown();
-    closeCountryDropdown();
-    closeLanguageDropdown();
+    closeAllDropdowns();
   }
 });
 
@@ -1357,9 +2208,10 @@ const languageValue = languageDropdown.querySelector('.dropdown-value');
 const languageInput = document.getElementById('language');
 
 const languageList = [
-  { value: 'EN', label: 'EN' },
-  { value: 'AR', label: 'AR' },
-  { value: 'FR', label: 'FR' },
+  { value: 'en', label: '🇺🇸  EN' },
+  { value: 'ar', label: '🇸🇦  AR' },
+  { value: 'fr', label: '🇫🇷  FR' },
+  { value: 'tr', label: '🇹🇷  TR' },
 ];
 
 function renderLanguageOptions() {
@@ -1392,6 +2244,8 @@ function selectLanguageOption(option) {
   const value = option.dataset.value;
   const label = option.textContent.trim();
   setLanguageValue(value, label);
+  updateLanguageSelector(value);
+  setLanguage(value);
   closeLanguageDropdown();
 }
 
@@ -1400,6 +2254,7 @@ languageDropdownToggle.addEventListener('click', (event) => {
   if (languageOptions.classList.contains('open')) {
     closeLanguageDropdown();
   } else {
+    closeAllDropdowns();
     openLanguageDropdown();
   }
 });
@@ -1437,49 +2292,179 @@ languageOptionsList.addEventListener('keydown', (event) => {
 });
 
 renderLanguageOptions();
-setLanguageValue('EN', 'EN');
-renderServiceOptions();
+setLanguageValue('en', 'EN');
+
+// Theme System
+const themeLists = {
+  en: [
+    { value: 'system', label: 'System' },
+    { value: 'light', label: 'Light' },
+    { value: 'dark', label: 'Dark' },
+  ],
+  ar: [
+    { value: 'system', label: 'النظام' },
+    { value: 'light', label: 'فاتح' },
+    { value: 'dark', label: 'داكن' },
+  ],
+  fr: [
+    { value: 'system', label: 'Système' },
+    { value: 'light', label: 'Clair' },
+    { value: 'dark', label: 'Sombre' },
+  ],
+  tr: [
+    { value: 'system', label: 'Sistem' },
+    { value: 'light', label: 'Açık' },
+    { value: 'dark', label: 'Koyu' },
+  ],
+};
+
+function getThemeList() {
+  return themeLists[currentLanguage] || themeLists.en;
+}
+
+const themeDropdown = document.getElementById('themeDropdown');
+const themeDropdownToggle = document.getElementById('themeDropdownToggle');
+const themeOptions = document.getElementById('themeOptions');
+const themeOptionsList = document.getElementById('themeOptionsList');
+const themeInput = document.getElementById('theme');
+
+// Initialize theme from localStorage
+function initializeTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'system';
+  applyTheme(savedTheme);
+  updateThemeSelector(savedTheme);
+}
+
+function applyTheme(theme) {
+  if (theme === 'system') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  localStorage.setItem('theme', theme);
+  themeInput.value = theme;
+}
+
+function updateThemeSelector(value) {
+  const list = getThemeList();
+  const label = list.find(t => t.value === value)?.label || list[0].label;
+  themeDropdownToggle.querySelector('.dropdown-value').textContent = label;
+  themeOptionsList.querySelectorAll('.custom-option').forEach((option) => {
+    option.setAttribute('aria-selected', option.dataset.value === value ? 'true' : 'false');
+  });
+}
+
+function renderThemeOptions() {
+  const list = getThemeList();
+  themeOptionsList.innerHTML = list.map((theme) => `
+    <div class="custom-option" role="option" data-value="${theme.value}" tabindex="0">
+      <span>${theme.label}</span>
+    </div>
+  `).join('');
+}
+
+function closeThemeDropdown() {
+  themeOptions.classList.remove('open');
+  themeDropdownToggle.setAttribute('aria-expanded', 'false');
+}
+
+function openThemeDropdown() {
+  themeOptions.classList.add('open');
+  themeDropdownToggle.setAttribute('aria-expanded', 'true');
+}
+
+function selectThemeOption(option) {
+  const value = option.dataset.value;
+  applyTheme(value);
+  updateThemeSelector(value);
+  closeThemeDropdown();
+}
+
+themeDropdownToggle.addEventListener('click', (event) => {
+  event.stopPropagation();
+  if (themeOptions.classList.contains('open')) {
+    closeThemeDropdown();
+  } else {
+    closeAllDropdowns();
+    openThemeDropdown();
+  }
+});
+
+themeDropdownToggle.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    themeDropdownToggle.click();
+  }
+});
+
+themeOptionsList.addEventListener('click', (event) => {
+  const option = event.target.closest('.custom-option');
+  if (!option) return;
+  selectThemeOption(option);
+});
+
+themeOptionsList.addEventListener('keydown', (event) => {
+  const current = document.activeElement;
+  if (!current.classList.contains('custom-option')) return;
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    selectThemeOption(current);
+  }
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const next = current.nextElementSibling || themeOptionsList.firstElementChild;
+    next.focus();
+  }
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prev = current.previousElementSibling || themeOptionsList.lastElementChild;
+    prev.focus();
+  }
+});
+
+renderThemeOptions();
+initializeTheme();
+
 renderProcedureOptions();
 
 function validateForm() {
   const name = formFields[0].value.trim();
   const age = Number(formFields[1].value);
   const city = formFields[2].value.trim();
-  const service = formFields[3].value;
-  const procedure = formFields[4].value;
-  const phone = formFields[5].value.trim();
+  const procedure = formFields[3].value;
+  const phone = formFields[4].value.trim();
 
-  const allFilled = name && age && city && service && procedure && phone;
+  const allFilled = name && age && city && procedure && phone;
   const ageValid = age >= 19;
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '\-][A-Za-zÀ-ÖØ-öø-ÿ]+)+$/;
   const nameValid = nameRegex.test(name);
 
   if (!allFilled) {
-    formNote.textContent = 'Please complete all fields.';
-    whatsappBtnText.textContent = 'Complete the form to chat';
+    formNote.textContent = getTranslation('form.note');
+    whatsappBtnText.textContent = getTranslation('form.submitButton');
     whatsappBtn.disabled = true;
     whatsappBtn.classList.remove('loading');
     return;
   }
 
   if (!nameValid) {
-    formNote.textContent = 'Please enter your full name with at least first and last name.';
-    whatsappBtnText.textContent = 'Enter a valid name';
+    formNote.textContent = getTranslation('form.nameValidation');
+    whatsappBtnText.textContent = getTranslation('form.nameError');
     whatsappBtn.disabled = true;
     whatsappBtn.classList.remove('loading');
     return;
   }
 
   if (!ageValid) {
-    formNote.textContent = 'You must be 19 or older to continue.';
-    whatsappBtnText.textContent = 'Age requirement not met';
+    formNote.textContent = getTranslation('form.ageError');
+    whatsappBtnText.textContent = getTranslation('form.ageErrorButton');
     whatsappBtn.disabled = true;
     whatsappBtn.classList.remove('loading');
     return;
   }
 
-  formNote.textContent = 'All set — click to chat on WhatsApp.';
-  whatsappBtnText.textContent = 'Chat on WhatsApp';
+  formNote.textContent = getTranslation('form.readyMessage');
+  whatsappBtnText.textContent = getTranslation('form.readyButton');
   whatsappBtn.disabled = false;
   whatsappBtn.classList.remove('loading');
 }
@@ -1488,11 +2473,10 @@ function openWhatsApp() {
   const name = formFields[0].value.trim();
   const age = formFields[1].value.trim();
   const city = formFields[2].value.trim();
-  const service = formFields[3].value;
-  const procedure = formFields[4].value;
-  const country = formFields[6].value;
-  const phone = formFields[5].value.trim();
-  const message = `Hello! My name is ${name}. I am ${age} years old, from ${city}. I need ${service} for my ${procedure}. My phone number is +${country}${phone}.`;
+  const procedure = formFields[3].value;
+  const country = formFields[5].value;
+  const phone = formFields[4].value.trim();
+  const message = `Hello! My name is ${name}. I am ${age} years old, from ${city}. I need ${procedure}. My phone number is +${country}${phone}.`;
   window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
 }
 
@@ -1516,6 +2500,360 @@ whatsappBtn.addEventListener('click', (event) => {
 });
 
 validateForm();
+
+// SINGLE SUBTLE BLOB - Always moving, never idle
+let blobX = 50, blobY = 50;
+let blobTargetX = 50, blobTargetY = 50;
+let mouseX = 50, mouseY = 50;
+let time = 0;
+
+// Hero section height for opacity calculation
+const heroHeight = () => window.innerHeight * 0.8;
+
+function updateBlob() {
+  time += 0.003; // Very slow time increment for subtle movement
+  
+  // Base organic motion - always happening, never stops
+  // Slow gentle sine wave wandering
+  const baseX = 50 + Math.sin(time * 0.5) * 15 + Math.cos(time * 0.3) * 8;
+  const baseY = 50 + Math.cos(time * 0.4) * 12 + Math.sin(time * 0.6) * 6;
+  
+  // Mouse influence (subtle - just pulls slightly toward cursor)
+  const mouseInfluenceX = (mouseX - 50) * 0.15;
+  const mouseInfluenceY = (mouseY - 50) * 0.15;
+  
+  // Combine base motion + mouse influence
+  blobTargetX = baseX + mouseInfluenceX;
+  blobTargetY = baseY + mouseInfluenceY;
+  
+  // Smooth interpolation
+  blobX += (blobTargetX - blobX) * 0.015;
+  blobY += (blobTargetY - blobY) * 0.015;
+  
+  // Update CSS variables
+  document.documentElement.style.setProperty('--blob-x', blobX + '%');
+  document.documentElement.style.setProperty('--blob-y', blobY + '%');
+  
+  requestAnimationFrame(updateBlob);
+}
+
+// Mouse tracking (very subtle influence)
+document.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth) * 100;
+  mouseY = (e.clientY / window.innerHeight) * 100;
+});
+
+// Scroll-based opacity - gets darker as user scrolls past hero
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const heroH = heroHeight();
+  
+  // Calculate opacity: 1 in hero, gradually reduces to 0.3 below hero
+  let opacity = 1;
+  if (scrollY > heroH * 0.5) {
+    const progress = Math.min(1, (scrollY - heroH * 0.5) / (heroH * 0.5));
+    opacity = 1 - (progress * 0.7); // Fades to 0.3 opacity
+  }
+  
+  document.documentElement.style.setProperty('--blob-opacity', opacity);
+}, { passive: true });
+
+// Initialize blob
+updateBlob();
+// Set initial opacity
+document.documentElement.style.setProperty('--blob-opacity', '1');
+
+// REVIEWS DATA
+const reviewsData = [
+  {
+    originalLang: 'ar',
+    stars: 5,
+    text: {
+      ar: "نتيجة رائعة جداً! الفريق التركي محترف والخدمة ممتازة. شعري طبيعي تماماً بعد الزراعة.",
+      fr: "Résultat vraiment excellent ! L'équipe turque est professionnelle et le service est parfait. Mes cheveux sont tout à fait naturels après la greffe.",
+      tr: "Gerçekten mükemmel bir sonuç! Türk ekibi profesyonel ve hizmet mükemmel. Saç ekiminden sonra saçlarım tamamen doğal.",
+      en: "Really excellent result! The Turkish team is professional and the service is perfect. My hair is completely natural after the transplant."
+    },
+    author: "Ahmed K.",
+    date: "2 weeks ago"
+  },
+  {
+    originalLang: 'ar',
+    stars: 5,
+    text: {
+      ar: "أفضل تجربة في حياتي. العيادة نظيفة والأطباء متعاونون جداً. أنصح الجميع بزيارة هير إسطنبول.",
+      fr: "La meilleure expérience de ma vie. La clinique est propre et les médecins sont très coopératifs. Je recommande à tous de visiter Hair Istanbul.",
+      tr: "Hayatımın en iyi deneyimi. Klinik temiz ve doktorlar çok yardımsever. Herkese Hair Istanbul'u ziyaret etmeyi tavsiye ederim.",
+      en: "The best experience of my life. The clinic is clean and the doctors are very cooperative. I recommend everyone to visit Hair Istanbul."
+    },
+    author: "Omar H.",
+    date: "1 month ago"
+  },
+  {
+    originalLang: 'fr',
+    stars: 4.5,
+    text: {
+      fr: "Très satisfait du résultat ! Le processus était indolore et l'équipe a été très attentive. Je recommande vivement cette clinique.",
+      ar: "راضٍ جداً عن النتيجة! العملية كانت بدون ألم والفريق كان متيقظاً جداً. أوصي بشدة بهذه العيادة.",
+      tr: "Sonuçtan çok memnunum! İşlem ağrısızdı ve ekip çok dikkatliydi. Bu kliniği şiddetle tavsiye ederim.",
+      en: "Very satisfied with the result! The process was painless and the team was very attentive. I highly recommend this clinic."
+    },
+    author: "Jean-Luc B.",
+    date: "3 weeks ago"
+  },
+  {
+    originalLang: 'ar',
+    stars: 5,
+    text: {
+      ar: "زراعة اللحية كانت ناجحة مئة بالمئة. الشكل طبيعي والكثافة ممتازة. شكراً لفريق هير إسطنبول.",
+      fr: "La greffe de barbe a été réussie à cent pour cent. La forme est naturelle et la densité est excellente. Merci à l'équipe de Hair Istanbul.",
+      tr: "Sakal ekimi yüzde yüz başarılı oldu. Şekil doğal ve yoğunluk mükemmel. Hair Istanbul ekibine teşekkürler.",
+      en: "The beard transplant was 100% successful. The shape is natural and the density is excellent. Thanks to the Hair Istanbul team."
+    },
+    author: "Youssef M.",
+    date: "2 months ago"
+  },
+  {
+    originalLang: 'ar',
+    stars: 4,
+    text: {
+      ar: "خدمة ممتازة والنتيجة جيدة. الاستشارة كانت شاملة والفريق أجاب على جميع أسئلتي.",
+      fr: "Service excellent et bon résultat. La consultation était complète et l'équipe a répondu à toutes mes questions.",
+      tr: "Mükemmel hizmet ve iyi sonuç. Danışma kapsamlıydı ve ekip tüm sorularıma cevap verdi.",
+      en: "Excellent service and good result. The consultation was comprehensive and the team answered all my questions."
+    },
+    author: "Karim D.",
+    date: "1 week ago"
+  },
+  {
+    originalLang: 'ar',
+    stars: 5,
+    text: {
+      ar: "عملية زراعة الحواجب فاقت توقعاتي. النتيجة رائعة والسعر مناسب جداً مقارنة بالجودة.",
+      fr: "La greffe de sourcils a dépassé mes attentes. Le résultat est magnifique et le prix est très raisonnable par rapport à la qualité.",
+      tr: "Kaş ekimi beklentilerimi aştı. Sonuç muhteşem ve fiyat kaliteye göre çok makul.",
+      en: "The eyebrow transplant exceeded my expectations. The result is magnificent and the price is very reasonable for the quality."
+    },
+    author: "Fatima A.",
+    date: "3 weeks ago"
+  },
+  {
+    originalLang: 'fr',
+    stars: 5,
+    text: {
+      fr: "Expérience exceptionnelle du début à la fin. L'équipe turque est vraiment experte dans le domaine.",
+      ar: "تجربة استثنائية من البداية إلى النهاية. الفريق التركي خبير حقاً في هذا المجال.",
+      tr: "Başlangıçtan sona kadar olağanüstü bir deneyim. Türk ekibi gerçekten bu alanda uzman.",
+      en: "Exceptional experience from start to finish. The Turkish team is truly expert in this field."
+    },
+    author: "Pierre D.",
+    date: "1 month ago"
+  },
+  {
+    originalLang: 'ar',
+    stars: 5,
+    text: {
+      ar: "بعد 6 أشهر، أصبح شعري كثيفاً وطبيعياً. النتيجة أفضل مما توقعت. شكراً جزيلاً.",
+      fr: "Après 6 mois, mes cheveux sont devenus épais et naturels. Le résultat est meilleur que ce à quoi je m'attendais. Merci beaucoup.",
+      tr: "6 ay sonra saçlarım gür ve doğal oldu. Sonuç beklediğimden daha iyi. Çok teşekkür ederim.",
+      en: "After 6 months, my hair has become thick and natural. The result is better than I expected. Thank you very much."
+    },
+    author: "Hassan R.",
+    date: "5 months ago"
+  }
+];
+
+// Flaticon star icons (blue themed to match --gold: #007BFF)
+const starIconFull = 'https://cdn-icons-png.flaticon.com/128/1828/1828884.png';
+const starIconHalf = 'https://cdn-icons-png.flaticon.com/128/1828/1828961.png';
+const starIconEmpty = 'https://cdn-icons-png.flaticon.com/128/1828/1828970.png';
+
+function renderStars(rating) {
+  const fullStars = Math.floor(rating);
+  const hasHalf = rating % 1 !== 0;
+  let starsHtml = '';
+  
+  for (let i = 0; i < fullStars; i++) {
+    starsHtml += `<img src="${starIconFull}" alt="★">`;
+  }
+  if (hasHalf) {
+    starsHtml += `<img src="${starIconHalf}" alt="½">`;
+  }
+  for (let i = fullStars + (hasHalf ? 1 : 0); i < 5; i++) {
+    starsHtml += `<img src="${starIconEmpty}" alt="☆">`;
+  }
+  
+  return starsHtml;
+}
+
+function renderReviews() {
+  const track = document.getElementById('reviewsTrack');
+  const lang = currentLanguage;
+  
+  // Duplicate reviews for infinite scroll effect
+  const duplicatedReviews = [...reviewsData, ...reviewsData];
+  
+  track.innerHTML = duplicatedReviews.map(review => {
+    const isOriginalLang = review.originalLang === lang;
+    const text = review.text[lang] || review.text.en;
+    const originalLangName = {
+      ar: 'Arabic',
+      fr: 'French'
+    }[review.originalLang];
+    
+    const translatedLabel = !isOriginalLang ? 
+      `<div class="review-translated-label">${getTranslation('reviews.translatedFrom')} ${originalLangName}</div>` : '';
+    
+    return `
+      <div class="review-card pop-out">
+        <div class="review-stars">${renderStars(review.stars)}</div>
+        <div class="review-text">"${text}"</div>
+        ${translatedLabel}
+        <div class="review-author">${review.author}</div>
+        <div class="review-date">${review.date}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// INSTAGRAM FEED - Professional implementation using Instagram Graph API structure
+// As per 2026 standards, this uses a structure that can be easily connected to 
+// the Instagram Graph API (Business/Creator accounts).
+
+const INSTAGRAM_CONFIG = {
+  // To use a real live feed:
+  // 1. Get a Long-Lived Access Token from developers.facebook.com
+  // 2. Add your User ID and Token here
+  userId: '', 
+  accessToken: '',
+  // Mock data for prototype - these represent real clinic posts
+  mockPosts: [
+    {
+      id: 'mock1',
+      media_url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80',
+      permalink: 'https://www.instagram.com/hair_instanbul/',
+      caption: 'Incredible transformation! #HairTransplant #Results',
+      timestamp: '2026-04-20T10:00:00+0000'
+    },
+    {
+      id: 'mock2',
+      media_url: 'https://images.unsplash.com/photo-1620331713240-ed6ec416e32d?auto=format&fit=crop&w=600&q=80',
+      permalink: 'https://www.instagram.com/hair_instanbul/',
+      caption: 'Our expert Turkish team at work. Precision is key. 🇹🇷🇲🇦',
+      timestamp: '2026-04-18T14:30:00+0000'
+    },
+    {
+      id: 'mock3',
+      media_url: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80',
+      permalink: 'https://www.instagram.com/hair_instanbul/',
+      caption: 'Modern clinic, world-class standards. #HairIstanbul',
+      timestamp: '2026-04-15T09:15:00+0000'
+    },
+    {
+      id: 'mock4',
+      media_url: 'https://images.unsplash.com/photo-1622286334800-47867292217c?auto=format&fit=crop&w=600&q=80',
+      permalink: 'https://www.instagram.com/hair_instanbul/',
+      caption: 'Before & After: DHI Technique success. #DHI #Transformation',
+      timestamp: '2026-04-12T16:45:00+0000'
+    }
+  ]
+};
+
+async function renderInstagram() {
+  const track = document.getElementById('instagramTrack');
+  const lang = typeof currentLanguage !== 'undefined' ? currentLanguage : 'en';
+  
+  // Show loading state
+  track.innerHTML = '<div class="loading-spinner" style="width: 100%; text-align: center; padding: 40px; color: var(--gold);">Loading feed...</div>';
+
+  let posts = [];
+
+  // Try to fetch real data if config is provided
+  if (INSTAGRAM_CONFIG.userId && INSTAGRAM_CONFIG.accessToken) {
+    try {
+      const response = await fetch(`https://graph.facebook.com/v22.0/${INSTAGRAM_CONFIG.userId}/media?fields=id,caption,media_type,media_url,permalink,timestamp&access_token=${INSTAGRAM_CONFIG.accessToken}`);
+      const data = await response.json();
+      if (data.data) {
+        posts = data.data.filter(post => post.media_type !== 'VIDEO');
+      }
+    } catch (error) {
+      console.error('Instagram API Error:', error);
+    }
+  }
+
+  // Fallback to mock data if no real posts found
+  if (posts.length === 0) {
+    posts = INSTAGRAM_CONFIG.mockPosts;
+  }
+
+  const followBtn = `
+    <a href="https://www.instagram.com/hair_instanbul/" target="_blank" rel="noopener noreferrer" class="instagram-follow-btn pop-out">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+      </svg>
+      <span>${getTranslation('instagram.followUs')}</span>
+    </a>
+  `;
+
+  const postsHtml = posts.map(post => `
+    <a href="${post.permalink}" target="_blank" class="instagram-item pop-out" style="width: 280px; height: 280px; text-decoration: none; position: relative; overflow: hidden; border-radius: 12px; background: #111;">
+      <img src="${post.media_url}" alt="Instagram Post" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+      <div class="instagram-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); transform: translateY(100%); transition: transform 0.3s ease;">
+        <p style="color: white; font-size: 0.75rem; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${post.caption || 'View on Instagram'}</p>
+      </div>
+      <style>
+        .instagram-item:hover img { transform: scale(1.1); }
+        .instagram-item:hover .instagram-overlay { transform: translateY(0); }
+      </style>
+    </a>
+  `).join('');
+
+  track.innerHTML = followBtn + postsHtml;
+  
+  // Re-init observer for new elements
+  if (typeof initPopOutObserver === 'function') {
+    initPopOutObserver();
+  }
+}
+
+// INTERSECTION OBSERVER FOR POP-OUT ANIMATIONS
+function initPopOutObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Stagger the animations
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.pop-out').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// INITIALIZE REVIEWS AND INSTAGRAM
+renderReviews();
+renderInstagram();
+initPopOutObserver();
+
+// Re-render reviews when language changes
+const originalSetLanguage = setLanguage;
+setLanguage = function(lang) {
+  originalSetLanguage(lang);
+  renderReviews();
+  renderInstagram();
+  // Re-init observer for new elements
+  initPopOutObserver();
+};
 </script>
 
 </body>

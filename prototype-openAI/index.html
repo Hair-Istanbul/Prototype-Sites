@@ -909,132 +909,6 @@
     margin-top: 0.25rem;
   }
 
-  /* INSTAGRAM SECTION */
-  .instagram-scroll {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    margin-top: 3rem;
-    position: relative;
-    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-  }
-
-  .instagram-scroll:hover .instagram-track {
-    animation-play-state: paused;
-  }
-
-  .instagram-track {
-    display: flex;
-    gap: 1rem;
-    padding: 0.5rem;
-    width: max-content;
-    animation: scrollInstagram 35s linear infinite;
-  }
-
-  @keyframes scrollInstagram {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .instagram-item {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-  }
-
-  .instagram-item:hover {
-    transform: translateY(-4px) scale(1.02);
-    border-color: rgba(0,123,255,0.3);
-    box-shadow: 0 12px 40px rgba(0,123,255,0.1);
-  }
-
-  .instagram-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .instagram-item:hover img {
-    transform: scale(1.05);
-  }
-
-  .instagram-follow-btn {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    border-radius: 8px;
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text);
-    text-decoration: none;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  .instagram-follow-btn:hover {
-    transform: translateY(-4px) scale(1.02);
-    border-color: rgba(0,123,255,0.3);
-    box-shadow: 0 12px 40px rgba(0,123,255,0.1);
-  }
-
-  .instagram-follow-btn svg {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1rem;
-    stroke: var(--gold);
-  }
-
-  .instagram-follow-btn span {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .instagram-reel-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
-
-  /* SUBTLE SINGLE BLOB BACKGROUND */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(ellipse 50vw 40vh at var(--blob-x, 50%) var(--blob-y, 50%), 
-        rgba(0, 123, 255, calc(0.06 * var(--blob-opacity, 1))) 0%, 
-        rgba(0, 123, 255, calc(0.02 * var(--blob-opacity, 1))) 40%, 
-        transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(80px);
-    transition: opacity 0.3s ease;
-  }
-
   /* POP-OUT ANIMATIONS - UNIFORM ACROSS ALL ELEMENTS */
   .pop-out {
     opacity: 0;
@@ -1209,18 +1083,6 @@
     <div class="reviews-scroll">
       <div class="reviews-track" id="reviewsTrack">
         <!-- Reviews will be populated by JavaScript -->
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="instagram">
-  <div class="container">
-    <p class="section-label" data-i18n="instagram.sectionLabel">Follow Us</p>
-    <h2 data-i18n="instagram.title">@hair_instanbul</h2>
-    <div class="instagram-scroll">
-      <div class="instagram-track" id="instagramTrack">
-        <!-- Instagram posts will be populated by JavaScript -->
       </div>
     </div>
   </div>
@@ -1652,8 +1514,16 @@ const translations = {
   }
 };
 
-// Current language
-let currentLanguage = 'en';
+// Current language - detect from browser with English fallback
+function detectLanguage() {
+  const browserLang = navigator.language || navigator.userLanguage;
+  const langCode = browserLang.split('-')[0].toLowerCase();
+  
+  const supportedLangs = ['en', 'ar', 'fr', 'tr'];
+  return supportedLangs.includes(langCode) ? langCode : 'en';
+}
+
+let currentLanguage = detectLanguage();
 
 // Language switching function
 function setLanguage(lang) {
@@ -2292,7 +2162,8 @@ languageOptionsList.addEventListener('keydown', (event) => {
 });
 
 renderLanguageOptions();
-setLanguageValue('en', 'EN');
+setLanguageValue(currentLanguage, currentLanguage.toUpperCase());
+setLanguage(currentLanguage);
 
 // Theme System
 const themeLists = {
@@ -2501,67 +2372,54 @@ whatsappBtn.addEventListener('click', (event) => {
 
 validateForm();
 
-// SINGLE SUBTLE BLOB - Always moving, never idle
-let blobX = 50, blobY = 50;
-let blobTargetX = 50, blobTargetY = 50;
-let mouseX = 50, mouseY = 50;
-let time = 0;
+// ORIGINAL GRADIENT ANIMATION SYSTEM
+let gradientX = 50;
+let gradientY = 50;
+let targetX = 50;
+let targetY = 50;
 
-// Hero section height for opacity calculation
-const heroHeight = () => window.innerHeight * 0.8;
-
-function updateBlob() {
-  time += 0.003; // Very slow time increment for subtle movement
+function updateGradient() {
+  gradientX += (targetX - gradientX) * 0.08;
+  gradientY += (targetY - gradientY) * 0.08;
   
-  // Base organic motion - always happening, never stops
-  // Slow gentle sine wave wandering
-  const baseX = 50 + Math.sin(time * 0.5) * 15 + Math.cos(time * 0.3) * 8;
-  const baseY = 50 + Math.cos(time * 0.4) * 12 + Math.sin(time * 0.6) * 6;
+  document.documentElement.style.setProperty('--gradient-x', gradientX + '%');
+  document.documentElement.style.setProperty('--gradient-y', gradientY + '%');
   
-  // Mouse influence (subtle - just pulls slightly toward cursor)
-  const mouseInfluenceX = (mouseX - 50) * 0.15;
-  const mouseInfluenceY = (mouseY - 50) * 0.15;
-  
-  // Combine base motion + mouse influence
-  blobTargetX = baseX + mouseInfluenceX;
-  blobTargetY = baseY + mouseInfluenceY;
-  
-  // Smooth interpolation
-  blobX += (blobTargetX - blobX) * 0.015;
-  blobY += (blobTargetY - blobY) * 0.015;
-  
-  // Update CSS variables
-  document.documentElement.style.setProperty('--blob-x', blobX + '%');
-  document.documentElement.style.setProperty('--blob-y', blobY + '%');
-  
-  requestAnimationFrame(updateBlob);
+  requestAnimationFrame(updateGradient);
 }
 
-// Mouse tracking (very subtle influence)
+updateGradient();
+
+// Mouse movement - subtle effect
 document.addEventListener('mousemove', (e) => {
-  mouseX = (e.clientX / window.innerWidth) * 100;
-  mouseY = (e.clientY / window.innerHeight) * 100;
+  const x = (e.clientX / window.innerWidth) * 100;
+  const y = (e.clientY / window.innerHeight) * 100;
+  
+  targetX = 30 + (x * 0.4);
+  targetY = 30 + (y * 0.4);
 });
 
-// Scroll-based opacity - gets darker as user scrolls past hero
+// Click events - brief pulse
+document.addEventListener('click', () => {
+  targetX = 50 + (Math.random() - 0.5) * 20;
+  targetY = 50 + (Math.random() - 0.5) * 20;
+});
+
+// Scroll events - gentle shift
+let scrollTimeout;
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
-  const heroH = heroHeight();
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollY / maxScroll) * 100;
   
-  // Calculate opacity: 1 in hero, gradually reduces to 0.3 below hero
-  let opacity = 1;
-  if (scrollY > heroH * 0.5) {
-    const progress = Math.min(1, (scrollY - heroH * 0.5) / (heroH * 0.5));
-    opacity = 1 - (progress * 0.7); // Fades to 0.3 opacity
-  }
+  targetY = 30 + (scrollPercent * 0.4);
   
-  document.documentElement.style.setProperty('--blob-opacity', opacity);
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    targetX = 50;
+    targetY = 50;
+  }, 1500);
 }, { passive: true });
-
-// Initialize blob
-updateBlob();
-// Set initial opacity
-document.documentElement.style.setProperty('--blob-opacity', '1');
 
 // REVIEWS DATA
 const reviewsData = [
@@ -2716,108 +2574,6 @@ function renderReviews() {
   }).join('');
 }
 
-// INSTAGRAM FEED - Professional implementation using Instagram Graph API structure
-// As per 2026 standards, this uses a structure that can be easily connected to 
-// the Instagram Graph API (Business/Creator accounts).
-
-const INSTAGRAM_CONFIG = {
-  // To use a real live feed:
-  // 1. Get a Long-Lived Access Token from developers.facebook.com
-  // 2. Add your User ID and Token here
-  userId: '', 
-  accessToken: '',
-  // Mock data for prototype - these represent real clinic posts
-  mockPosts: [
-    {
-      id: 'mock1',
-      media_url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80',
-      permalink: 'https://www.instagram.com/hair_instanbul/',
-      caption: 'Incredible transformation! #HairTransplant #Results',
-      timestamp: '2026-04-20T10:00:00+0000'
-    },
-    {
-      id: 'mock2',
-      media_url: 'https://images.unsplash.com/photo-1620331713240-ed6ec416e32d?auto=format&fit=crop&w=600&q=80',
-      permalink: 'https://www.instagram.com/hair_instanbul/',
-      caption: 'Our expert Turkish team at work. Precision is key. 🇹🇷🇲🇦',
-      timestamp: '2026-04-18T14:30:00+0000'
-    },
-    {
-      id: 'mock3',
-      media_url: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=80',
-      permalink: 'https://www.instagram.com/hair_instanbul/',
-      caption: 'Modern clinic, world-class standards. #HairIstanbul',
-      timestamp: '2026-04-15T09:15:00+0000'
-    },
-    {
-      id: 'mock4',
-      media_url: 'https://images.unsplash.com/photo-1622286334800-47867292217c?auto=format&fit=crop&w=600&q=80',
-      permalink: 'https://www.instagram.com/hair_instanbul/',
-      caption: 'Before & After: DHI Technique success. #DHI #Transformation',
-      timestamp: '2026-04-12T16:45:00+0000'
-    }
-  ]
-};
-
-async function renderInstagram() {
-  const track = document.getElementById('instagramTrack');
-  const lang = typeof currentLanguage !== 'undefined' ? currentLanguage : 'en';
-  
-  // Show loading state
-  track.innerHTML = '<div class="loading-spinner" style="width: 100%; text-align: center; padding: 40px; color: var(--gold);">Loading feed...</div>';
-
-  let posts = [];
-
-  // Try to fetch real data if config is provided
-  if (INSTAGRAM_CONFIG.userId && INSTAGRAM_CONFIG.accessToken) {
-    try {
-      const response = await fetch(`https://graph.facebook.com/v22.0/${INSTAGRAM_CONFIG.userId}/media?fields=id,caption,media_type,media_url,permalink,timestamp&access_token=${INSTAGRAM_CONFIG.accessToken}`);
-      const data = await response.json();
-      if (data.data) {
-        posts = data.data.filter(post => post.media_type !== 'VIDEO');
-      }
-    } catch (error) {
-      console.error('Instagram API Error:', error);
-    }
-  }
-
-  // Fallback to mock data if no real posts found
-  if (posts.length === 0) {
-    posts = INSTAGRAM_CONFIG.mockPosts;
-  }
-
-  const followBtn = `
-    <a href="https://www.instagram.com/hair_instanbul/" target="_blank" rel="noopener noreferrer" class="instagram-follow-btn pop-out">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-      </svg>
-      <span>${getTranslation('instagram.followUs')}</span>
-    </a>
-  `;
-
-  const postsHtml = posts.map(post => `
-    <a href="${post.permalink}" target="_blank" class="instagram-item pop-out" style="width: 280px; height: 280px; text-decoration: none; position: relative; overflow: hidden; border-radius: 12px; background: #111;">
-      <img src="${post.media_url}" alt="Instagram Post" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
-      <div class="instagram-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); transform: translateY(100%); transition: transform 0.3s ease;">
-        <p style="color: white; font-size: 0.75rem; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${post.caption || 'View on Instagram'}</p>
-      </div>
-      <style>
-        .instagram-item:hover img { transform: scale(1.1); }
-        .instagram-item:hover .instagram-overlay { transform: translateY(0); }
-      </style>
-    </a>
-  `).join('');
-
-  track.innerHTML = followBtn + postsHtml;
-  
-  // Re-init observer for new elements
-  if (typeof initPopOutObserver === 'function') {
-    initPopOutObserver();
-  }
-}
-
 // INTERSECTION OBSERVER FOR POP-OUT ANIMATIONS
 function initPopOutObserver() {
   const observer = new IntersectionObserver((entries) => {
@@ -2840,9 +2596,8 @@ function initPopOutObserver() {
   });
 }
 
-// INITIALIZE REVIEWS AND INSTAGRAM
+// INITIALIZE
 renderReviews();
-renderInstagram();
 initPopOutObserver();
 
 // Re-render reviews when language changes
@@ -2850,9 +2605,65 @@ const originalSetLanguage = setLanguage;
 setLanguage = function(lang) {
   originalSetLanguage(lang);
   renderReviews();
-  renderInstagram();
   // Re-init observer for new elements
   initPopOutObserver();
+};
+
+// Visitor tracking
+async function trackVisitor() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    const ipAddress = data.ip;
+
+    await fetch('/api/visitor', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ip_address: ipAddress,
+        user_agent: navigator.userAgent
+      })
+    });
+  } catch (error) {
+    console.log('Visitor tracking failed (this is expected if backend is not running)');
+  }
+}
+
+trackVisitor();
+
+// Modified booking submission to send to backend
+const originalOpenWhatsApp = openWhatsApp;
+openWhatsApp = async function() {
+  const name = formFields[0].value.trim();
+  const age = formFields[1].value.trim();
+  const city = formFields[2].value.trim();
+  const procedure = formFields[3].value;
+  const country = formFields[5].value;
+  const phone = formFields[4].value.trim();
+
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    const ipAddress = data.ip;
+
+    await fetch('/api/booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        age,
+        city,
+        procedure,
+        phone,
+        country_code: country,
+        ip_address: ipAddress
+      })
+    });
+  } catch (error) {
+    console.log('Booking tracking failed (this is expected if backend is not running)');
+  }
+
+  originalOpenWhatsApp();
 };
 </script>
 

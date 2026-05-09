@@ -55,14 +55,15 @@ function authenticateToken(req, res, next) {
   }
 }
 
-app.post('/api/login', authLimiter, (req, res) => {
+app.post('/api/login', authLimiter, async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required.' });
   }
 
-  const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username);
+  await db.read();
+  const user = db.data.users.find(u => u.username === username);
 
   if (!user || !bcrypt.compareSync(password, user.password_hash)) {
     return res.status(401).json({ error: 'Invalid credentials.' });
@@ -96,7 +97,7 @@ app.post('/api/logout', (req, res) => {
   res.json({ success: true });
 });
 
-app.post('/api/visitor', (req, res) => {
+app.post('/api/visitor', async (req, res) => {
   const { ip_address, user_agent } = req.body;
   
   if (!ip_address) {
@@ -107,20 +108,24 @@ app.post('/api/visitor', (req, res) => {
   const country = geo?.country || null;
   const city = geo?.city || null;
 
-  const stmt = db.prepare(`
-    INSERT INTO visitors (ip_address, country, city, user_agent)
-    VALUES (?, ?, ?, ?)
-  `);
-
   try {
-    stmt.run(ip_address, country, city, user_agent);
+    await db.read();
+    db.data.visitors.push({
+      id: Date.now(),
+      ip_address,
+      country,
+      city,
+      user_agent,
+      visited_at: new Date().toISOString()
+    });
+    await db.write();
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to record visitor.' });
   }
 });
 
-app.post('/api/booking', (req, res) => {
+app.post('/api/booking', async (req, res) => {
   const { name, age, city, procedure, phone, country_code, ip_address } = req.body;
 
   if (!name || !age || !city || !procedure || !phone || !country_code || !ip_address) {
@@ -131,72 +136,92 @@ app.post('/api/booking', (req, res) => {
   const country = geo?.country || null;
   const cityLocation = geo?.city || null;
 
-  const stmt = db.prepare(`
-    INSERT INTO bookings (name, age, city, procedure, phone, country_code, ip_address, country, city_location)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-
   try {
-    stmt.run(name, age, city, procedure, phone, country_code, ip_address, country, cityLocation);
+    await db.read();
+    db.data.bookings.push({
+      id: Date.now(),
+      name,
+      age,
+      city,
+      procedure,
+      phone,
+      country_code,
+      ip_address,
+      country,
+      city_location: cityLocation,
+      created_at: new Date().toISOString()
+    });
+    await db.write();
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to save booking.' });
   }
 });
 
-app.get('/api/analytics/visitors', authenticateToken, (req, res) => {
+app.get('/api/analytics/visitors', authenticateToken, async (req, res) => {
   const { start_date, end_date } = req.query;
 
-  let query = `
-    SELECT 
-      DATE(visited_at) as date,
-      COUNT(*) as total_visitors,
-      COUNT(DISTINCT ip_address) as unique_visitors
-    FROM visitors
-  `;
-
-  const params = [];
-
-  if (start_date && end_date) {
-    query += ` WHERE DATE(visited_at) BETWEEN ? AND ?`;
-    params.push(start_date, end_date);
-  }
-
-  query += ` GROUP BY DATE(visited_at) ORDER BY date ASC`;
-
   try {
-    const data = db.prepare(query).all(...params);
+    await db.read();
+    let visitors = db.data.visitors;
+
+    if (start_date && end_date) {
+      visitors = visitors.filter(v => {
+        const visitDate = new Date(v.visited_at).toISOString().split('T')[0];
+        return visitDate >= start_date && visitDate <= end_date;
+      });
+    }
+
+    const grouped = {};
+    visitors.forEach(v => {
+      const date = new Date(v.visited_at).toISOString().split('T')[0];
+      if (!grouped[date]) {
+        grouped[date] = { date, total_visitors: 0, unique_visitors: new Set() };
+      }
+      grouped[date].total_visitors++;
+      grouped[date].unique_visitors.add(v.ip_address);
+    });
+
+    const data = Object.values(grouped).map(g => ({
+      date: g.date,
+      total_visitors: g.total_visitors,
+      unique_visitors: g.unique_visitors.size
+    })).sort((a, b) => a.date.localeCompare(b.date));
+
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch analytics.' });
   }
 });
 
-app.get('/api/bookings', authenticateToken, (req, res) => {
+app.get('/api/bookings', authenticateToken, async (req, res) => {
   const { limit = 50, offset = 0 } = req.query;
 
   try {
-    const bookings = db.prepare(`
-      SELECT * FROM bookings
-      ORDER BY created_at DESC
-      LIMIT ? OFFSET ?
-    `).all(parseInt(limit), parseInt(offset));
+    await db.read();
+    const bookings = db.data.bookings
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(parseInt(offset), parseInt(offset) + parseInt(limit));
 
-    const total = db.prepare('SELECT COUNT(*) as count FROM bookings').get();
+    const total = db.data.bookings.length;
 
-    res.json({ bookings, total: total.count });
+    res.json({ bookings, total });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch bookings.' });
   }
 });
 
-app.get('/api/users', authenticateToken, (req, res) => {
+app.get('/api/users', authenticateToken, async (req, res) => {
   try {
-    const users = db.prepare(`
-      SELECT id, username, is_permanent, created_at
-      FROM users
-      ORDER BY created_at DESC
-    `).all();
+    await db.read();
+    const users = db.data.users
+      .map(u => ({
+        id: u.id,
+        username: u.username,
+        is_permanent: u.is_permanent,
+        created_at: u.created_at
+      }))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     res.json(users);
   } catch (error) {
@@ -204,7 +229,7 @@ app.get('/api/users', authenticateToken, (req, res) => {
   }
 });
 
-app.post('/api/users', authenticateToken, (req, res) => {
+app.post('/api/users', authenticateToken, async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -216,16 +241,21 @@ app.post('/api/users', authenticateToken, (req, res) => {
   }
 
   try {
-    const existingUser = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+    await db.read();
+    const existingUser = db.data.users.find(u => u.username === username);
     if (existingUser) {
       return res.status(400).json({ error: 'Username already exists.' });
     }
 
     const passwordHash = bcrypt.hashSync(password, 12);
-    db.prepare(`
-      INSERT INTO users (username, password_hash, is_permanent)
-      VALUES (?, ?, 0)
-    `).run(username, passwordHash);
+    db.data.users.push({
+      id: Date.now(),
+      username,
+      password_hash: passwordHash,
+      is_permanent: false,
+      created_at: new Date().toISOString()
+    });
+    await db.write();
 
     res.json({ success: true });
   } catch (error) {
@@ -233,7 +263,7 @@ app.post('/api/users', authenticateToken, (req, res) => {
   }
 });
 
-app.put('/api/users/:id', authenticateToken, (req, res) => {
+app.put('/api/users/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
 
@@ -246,18 +276,22 @@ app.put('/api/users/:id', authenticateToken, (req, res) => {
   }
 
   try {
-    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(id);
+    await db.read();
+    const userIndex = db.data.users.findIndex(u => u.id === parseInt(id));
 
-    if (!user) {
+    if (userIndex === -1) {
       return res.status(404).json({ error: 'User not found.' });
     }
+
+    const user = db.data.users[userIndex];
 
     if (user.is_permanent && user.username === 'm_uvex') {
       return res.status(403).json({ error: 'Cannot modify permanent user.' });
     }
 
     const passwordHash = bcrypt.hashSync(password, 12);
-    db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(passwordHash, id);
+    db.data.users[userIndex].password_hash = passwordHash;
+    await db.write();
 
     res.json({ success: true });
   } catch (error) {
@@ -265,21 +299,25 @@ app.put('/api/users/:id', authenticateToken, (req, res) => {
   }
 });
 
-app.delete('/api/users/:id', authenticateToken, (req, res) => {
+app.delete('/api/users/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(id);
+    await db.read();
+    const userIndex = db.data.users.findIndex(u => u.id === parseInt(id));
 
-    if (!user) {
+    if (userIndex === -1) {
       return res.status(404).json({ error: 'User not found.' });
     }
+
+    const user = db.data.users[userIndex];
 
     if (user.is_permanent) {
       return res.status(403).json({ error: 'Cannot delete permanent user.' });
     }
 
-    db.prepare('DELETE FROM users WHERE id = ?').run(id);
+    db.data.users.splice(userIndex, 1);
+    await db.write();
 
     res.json({ success: true });
   } catch (error) {
@@ -287,8 +325,20 @@ app.delete('/api/users/:id', authenticateToken, (req, res) => {
   }
 });
 
-app.get(ADMIN_PATH, authenticateToken, (req, res) => {
-  res.sendFile(path.join(__dirname, 'dashboard.html'));
+app.get(ADMIN_PATH, (req, res) => {
+  const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+  
+  if (!token) {
+    return res.sendFile(path.join(__dirname, 'dashboard-login.html'));
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    res.sendFile(path.join(__dirname, 'dashboard.html'));
+  } catch (error) {
+    res.clearCookie('token');
+    res.sendFile(path.join(__dirname, 'dashboard-login.html'));
+  }
 });
 
 app.get('/api/auth/check', authenticateToken, (req, res) => {

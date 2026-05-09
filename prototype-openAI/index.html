@@ -1523,7 +1523,7 @@ function detectLanguage() {
   return supportedLangs.includes(langCode) ? langCode : 'en';
 }
 
-let currentLanguage = detectLanguage();
+let currentLanguage = 'en'; // Default to English, will be updated on load
 
 // Language switching function
 function setLanguage(lang) {
@@ -2162,8 +2162,13 @@ languageOptionsList.addEventListener('keydown', (event) => {
 });
 
 renderLanguageOptions();
-setLanguageValue(currentLanguage, currentLanguage.toUpperCase());
-setLanguage(currentLanguage);
+
+// Initialize language on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const detectedLang = detectLanguage();
+  setLanguageValue(detectedLang, detectedLang.toUpperCase());
+  setLanguage(detectedLang);
+});
 
 // Theme System
 const themeLists = {

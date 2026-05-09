@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "id": 1778318559566,
+      "username": "m_uvex",
+      "password_hash": "$2a$12$EuIZLP9pOurxBgqYsujX4uIZVIcOm5fDN21QHskw.QwqCbQ/KEa4G",
+      "is_permanent": true,
+      "created_at": "2026-05-09T09:22:39.566Z"
+    },
+    {
+      "id": 1778318560839,
+      "username": "admin",
+      "password_hash": "$2a$12$PQs.NxigdYQYAp4c19t1oevrQuJgTPOqNhb6Cn/XQG.llE1/.MsCS",
+      "is_permanent": false,
+      "created_at": "2026-05-09T09:22:40.838Z"
+    }
+  ],
+  "visitors": [
+    {
+      "id": 1778335857467,
+      "ip_address": "89.167.110.113",
+      "country": "DE",
+      "city": null,
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0",
+      "visited_at": "2026-05-09T14:10:57.467Z"
+    },
+    {
+      "id": 1778336063119,
+      "ip_address": "89.167.110.113",
+      "country": "DE",
+      "city": null,
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0",
+      "visited_at": "2026-05-09T14:14:23.119Z"
+    }
+  ],
+  "bookings": []
+}
